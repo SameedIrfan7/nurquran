@@ -236,34 +236,146 @@ function isEpisodeLive(ep) {
 /* ── SETUP SCREEN ── */
 function SetupScreen({onDone}){
   const [name,setName]=useState('');
+  const [slide,setSlide]=useState(0);
+  const [nameErr,setNameErr]=useState(false);
+
+  const features=[
+    {icon:'📖',ar:'اقْرَأْ',title:'Read the complete Quran',desc:'All 114 Surahs in continuous Mushaf style. Arabic + translations in 8 languages including Urdu, English, French and more.'},
+    {icon:'🎙',ar:'تَرْتِيلًا',title:'Daily recitations until Ramadan',desc:'One anonymous voice reciting every single day from March 25, 2026 until Ramadan 2027. 365 days. One mission.'},
+    {icon:'🎵',ar:'صَوْت',title:'5 world-renowned Qaris',desc:'Mishary Alafasy, As-Sudais, Al-Husary, Al-Minshawi, Basfar. Tap any ayah to listen. Switch reciter in one tap.'},
+    {icon:'🏆',ar:'مُسَابَقَة',title:'Earn points & rank up',desc:'1 point per ayah. 50 bonus points per surah completed. Compete on the global leaderboard with readers worldwide.'},
+    {icon:'🎓',ar:'عِلْم',title:'Learn from great scholars',desc:'Dr. Israr Ahmed, Mufti Menk, Nouman Ali Khan, Omar Suleiman and more. Lectures and bayans inside the app.'},
+    {icon:'🌍',ar:'لِلنَّاس',title:'Free for every human on earth',desc:'No ads. No subscriptions. No data sold. Built as sadaqah. If Allah has blessed you, you can support us anytime.'},
+  ];
+
+  useEffect(()=>{
+    const t=setInterval(()=>setSlide(s=>(s+1)%features.length),3500);
+    return()=>clearInterval(t);
+  },[]);
+
+  const handleBegin=()=>{
+    if(!name.trim()){setNameErr(true);return;}
+    onDone(name.trim());
+  };
+
   return(
-    <div style={{minHeight:'100vh',display:'flex',alignItems:'center',justifyContent:'center',padding:28,position:'relative',overflow:'hidden',background:'var(--bg)'}}>
-      <div style={{position:'absolute',top:0,left:0,right:0,height:'60vh',background:'radial-gradient(ellipse at 50% -5%,rgba(200,164,90,0.09) 0%,transparent 65%)',pointerEvents:'none'}}/>
-      <div style={{maxWidth:500,width:'100%',textAlign:'center',animation:'fadeUp 0.8s ease both',position:'relative'}}>
-        <div style={{fontFamily:'Amiri,serif',fontSize:40,color:'var(--gold)',lineHeight:1.9,marginBottom:6,letterSpacing:2}}>بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ</div>
-        <div style={{fontSize:12,color:'var(--cream3)',marginBottom:14,letterSpacing:1.5}}>In the name of God, the Most Gracious, the Most Merciful</div>
-        <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:54,fontWeight:300,color:'var(--cream)',marginBottom:4,letterSpacing:4}}>NurQuran</div>
-        <div style={{fontFamily:'Amiri,serif',fontSize:13,color:'var(--cream3)',marginBottom:10,letterSpacing:2}}>نور القرآن · The Light of the Quran</div>
-        {/* Quote */}
-        <div style={{background:'var(--gold3)',border:'0.5px solid var(--border2)',borderRadius:14,padding:'18px 24px',marginBottom:32,position:'relative'}}>
-          <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:17,fontStyle:'italic',color:'var(--cream2)',lineHeight:1.9}}>
-            We are not asking for your hours.<br/>Just <span style={{color:'var(--gold)',fontStyle:'normal',fontWeight:600}}>10 minutes a day</span> — to stay connected to God.<br/>For you. For your children. For generations.
+    <div style={{minHeight:'100vh',display:'flex',flexDirection:'column',background:'var(--bg)',position:'relative',overflow:'hidden'}}>
+      {/* Background radial glow */}
+      <div style={{position:'absolute',top:0,left:0,right:0,height:'70vh',background:'radial-gradient(ellipse at 50% -10%,rgba(200,164,90,0.1) 0%,transparent 65%)',pointerEvents:'none'}}/>
+      <div style={{position:'absolute',bottom:0,right:0,width:400,height:400,background:'radial-gradient(ellipse at right bottom,rgba(200,164,90,0.04) 0%,transparent 70%)',pointerEvents:'none'}}/>
+
+      {/* Main layout — split on desktop */}
+      <div style={{flex:1,display:'flex',alignItems:'stretch',maxWidth:1100,margin:'0 auto',width:'100%',padding:'0 0'}}>
+
+        {/* LEFT — branding + carousel */}
+        <div style={{flex:1,display:'flex',flexDirection:'column',justifyContent:'center',padding:'40px 48px',borderRight:'0.5px solid var(--border)'}}>
+          {/* Logo */}
+          <div style={{marginBottom:40}}>
+            <div style={{fontFamily:'Amiri,serif',fontSize:12,color:'var(--gold)',opacity:0.5,letterSpacing:3,marginBottom:4}}>نور القرآن</div>
+            <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:48,fontWeight:300,color:'var(--cream)',letterSpacing:3,lineHeight:1}}>NurQuran</div>
+            <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:16,fontStyle:'italic',color:'var(--cream3)',marginTop:6}}>The Light of the Quran</div>
+          </div>
+
+          {/* Quote */}
+          <div style={{marginBottom:40,padding:'20px 24px',background:'var(--gold3)',border:'0.5px solid var(--border2)',borderRadius:16,position:'relative'}}>
+            <div style={{fontFamily:'Amiri,serif',fontSize:28,color:'var(--gold)',lineHeight:1.9,marginBottom:8,letterSpacing:1}}>اقْرَأْ بِاسْمِ رَبِّكَ</div>
+            <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:15,fontStyle:'italic',color:'var(--cream2)',lineHeight:1.7}}>Read in the name of your Lord<br/><span style={{fontSize:13,color:'var(--cream3)'}}>— Surah Al-Alaq, the first revelation</span></div>
+          </div>
+
+          {/* Feature carousel */}
+          <div style={{background:'var(--bg2)',border:'0.5px solid var(--border)',borderRadius:16,padding:'22px 24px',minHeight:130,position:'relative',overflow:'hidden'}}>
+            {features.map((f,i)=>(
+              <div key={i} style={{position:i===0?'relative':'absolute',top:0,left:0,right:0,padding:'22px 24px',opacity:slide===i?1:0,transform:slide===i?'translateY(0)':'translateY(8px)',transition:'all 0.5s ease',pointerEvents:slide===i?'all':'none'}}>
+                <div style={{display:'flex',alignItems:'flex-start',gap:16}}>
+                  <div style={{width:44,height:44,borderRadius:12,background:'var(--gold3)',border:'0.5px solid var(--border2)',display:'flex',alignItems:'center',justifyContent:'center',fontSize:20,flexShrink:0}}>{f.icon}</div>
+                  <div>
+                    <div style={{fontFamily:'Amiri,serif',fontSize:11,color:'var(--gold)',letterSpacing:2,marginBottom:4,opacity:0.7}}>{f.ar}</div>
+                    <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:18,color:'var(--cream)',marginBottom:6}}>{f.title}</div>
+                    <div style={{fontSize:13,color:'var(--cream3)',lineHeight:1.7}}>{f.desc}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+            {/* Dots */}
+            <div style={{display:'flex',gap:5,justifyContent:'center',marginTop:8,paddingTop:100}}>
+              {features.map((_,i)=>(
+                <div key={i} onClick={()=>setSlide(i)} style={{width:i===slide?20:6,height:6,borderRadius:3,background:i===slide?'var(--gold)':'var(--border2)',cursor:'pointer',transition:'all 0.3s'}}/>
+              ))}
+            </div>
+          </div>
+
+          {/* Stats row */}
+          <div style={{display:'flex',gap:16,marginTop:24}}>
+            {[{n:'114',l:'Surahs'},{n:'6,236',l:'Ayahs'},{n:'5',l:'Qaris'},{n:'8',l:'Languages'}].map(s=>(
+              <div key={s.l} style={{flex:1,textAlign:'center'}}>
+                <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:22,color:'var(--gold)'}}>{s.n}</div>
+                <div style={{fontSize:11,color:'var(--cream3)',letterSpacing:0.5}}>{s.l}</div>
+              </div>
+            ))}
           </div>
         </div>
-        <input value={name} onChange={e=>setName(e.target.value)} onKeyDown={e=>{if(e.key==='Enter'&&name.trim())onDone(name.trim())}} placeholder="Enter your name to begin" style={{width:'100%',background:'var(--bg3)',border:'1px solid var(--border2)',borderRadius:12,padding:'15px 20px',color:'var(--cream)',fontSize:16,outline:'none',textAlign:'center',letterSpacing:0.5,marginBottom:4,fontFamily:"'DM Sans',sans-serif"}}/>
-        {!name.trim()&&name.length>0&&<div style={{color:'var(--red)',fontSize:12,marginBottom:8,textAlign:'center'}}>Please enter your name to continue</div>}
-        {name.trim().length===0&&<div style={{height:12,marginBottom:4}}/>}
-        <button onClick={()=>{if(name.trim())onDone(name.trim());else onDone('Guest')}} style={{width:'100%',background:'var(--gold)',border:'none',borderRadius:12,padding:'16px',color:'#08100A',fontFamily:"'Cormorant Garamond',serif",fontSize:20,fontWeight:600,cursor:'pointer',letterSpacing:1,marginBottom:10}}>Begin Reading</button>
-        <button onClick={()=>onDone(name.trim()||'Guest')} style={{width:'100%',background:'transparent',border:'0.5px solid var(--border)',borderRadius:12,padding:'13px',color:'var(--cream3)',fontFamily:"'Cormorant Garamond',serif",fontSize:15,cursor:'pointer'}}>Continue without name</button>
-        {/* Subtle support note */}
-        <div style={{marginTop:20,padding:'14px 18px',background:'var(--gold3)',border:'0.5px solid var(--border)',borderRadius:12,textAlign:'center'}}>
-          <div style={{fontSize:12,color:'var(--cream3)',lineHeight:1.9}}>
-            This app is free for every human on earth, forever.<br/>
-            <span style={{color:'var(--gold)',fontSize:13}}>If Allah has blessed you, you can support us anytime from inside the app.</span>
+
+        {/* RIGHT — sign in form */}
+        <div style={{width:400,flexShrink:0,display:'flex',flexDirection:'column',justifyContent:'center',padding:'40px 40px'}}>
+
+          {/* Bismillah */}
+          <div style={{textAlign:'center',marginBottom:32}}>
+            <div style={{fontFamily:'Amiri,serif',fontSize:26,color:'var(--gold)',lineHeight:1.9,letterSpacing:1}}>بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ</div>
+            <div style={{fontSize:11,color:'var(--cream3)',letterSpacing:1.5,marginTop:4}}>Begin with the name of Allah</div>
+          </div>
+
+          <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:26,color:'var(--cream)',marginBottom:6}}>Welcome</div>
+          <div style={{fontSize:13,color:'var(--cream3)',lineHeight:1.7,marginBottom:28}}>Enter your name to begin your Quran journey. No account needed — just your name and intention.</div>
+
+          {/* Name input */}
+          <div style={{marginBottom:16}}>
+            <label style={{fontSize:11,color:'var(--cream3)',letterSpacing:1,display:'block',marginBottom:8}}>YOUR NAME</label>
+            <input
+              value={name}
+              onChange={e=>{setName(e.target.value);setNameErr(false)}}
+              onKeyDown={e=>{if(e.key==='Enter')handleBegin()}}
+              placeholder="e.g. Sameed"
+              style={{width:'100%',background:'var(--bg3)',border:`1px solid ${nameErr?'var(--red)':'var(--border2)'}`,borderRadius:12,padding:'14px 18px',color:'var(--cream)',fontSize:16,outline:'none',fontFamily:"'DM Sans',sans-serif",transition:'border 0.2s'}}
+            />
+            {nameErr&&<div style={{color:'var(--red)',fontSize:12,marginTop:6}}>Please enter your name to begin</div>}
+          </div>
+
+          {/* Coming soon badge */}
+          <div style={{background:'rgba(200,164,90,0.06)',border:'0.5px solid var(--border)',borderRadius:10,padding:'10px 14px',marginBottom:20,display:'flex',gap:10,alignItems:'flex-start'}}>
+            <span style={{fontSize:16,flexShrink:0}}>🔐</span>
+            <div style={{fontSize:12,color:'var(--cream3)',lineHeight:1.7}}>
+              <span style={{color:'var(--gold)'}}>Unique accounts coming soon</span> — your identity and progress will be fully secured so no two readers share the same data.
+            </div>
+          </div>
+
+          <button onClick={handleBegin} style={{width:'100%',background:'var(--gold)',border:'none',borderRadius:12,padding:'15px',color:'#08100A',fontFamily:"'Cormorant Garamond',serif",fontSize:18,fontWeight:600,cursor:'pointer',letterSpacing:0.5,marginBottom:10,transition:'opacity 0.2s'}}>
+            Begin Reading →
+          </button>
+          <button onClick={()=>onDone('Guest')} style={{width:'100%',background:'transparent',border:'0.5px solid var(--border)',borderRadius:12,padding:'13px',color:'var(--cream3)',fontFamily:"'Cormorant Garamond',serif",fontSize:14,cursor:'pointer',marginBottom:28}}>
+            Continue as Guest
+          </button>
+
+          {/* Support — subtle */}
+          <div style={{borderTop:'0.5px solid var(--border)',paddingTop:20}}>
+            <div style={{fontSize:12,color:'var(--cream3)',lineHeight:1.8,textAlign:'center'}}>
+              This app is <span style={{color:'var(--cream)'}}>100% free</span>, no ads, no subscriptions.<br/>
+              If Allah has blessed you, <span style={{color:'var(--gold)',cursor:'pointer'}} onClick={()=>window.open('https://ko-fi.com','_blank')}>support us here ↗</span> — sadaqah jariyah.
+            </div>
+          </div>
+
+          <div style={{marginTop:16,fontSize:10,color:'var(--cream3)',textAlign:'center',opacity:0.6,lineHeight:1.9}}>
+            All 114 Surahs · 5 Qaris · 8 Languages<br/>Daily Recitations · Free Forever · No Ads
           </div>
         </div>
-        <div style={{marginTop:14,fontSize:11,color:'var(--cream3)',lineHeight:2,letterSpacing:0.3,textAlign:'center'}}>All 114 Surahs · 5 Qaris · 6 Languages · Daily Recitations · Free Forever · No Ads</div>
       </div>
+
+      {/* Mobile layout override */}
+      <style>{`
+        @media(max-width:768px){
+          .setup-left{display:none!important}
+          .setup-right{width:100%!important;padding:32px 24px!important}
+        }
+      `}</style>
     </div>
   );
 }
@@ -316,6 +428,9 @@ function Sidebar({view,setView,pts,userName,theme,setTheme,onAdmin,completed,onL
             </button>
           ))}
         </div>
+        <button onClick={()=>window.open('https://ko-fi.com','_blank')} style={{width:'100%',background:'rgba(255,100,100,0.1)',border:'0.5px solid rgba(255,100,100,0.25)',borderRadius:8,padding:'8px',color:'#FF6464',cursor:'pointer',fontSize:12,display:'flex',alignItems:'center',justifyContent:'center',gap:6,fontFamily:"'DM Sans',sans-serif",marginBottom:6}}>
+          ❤ Support NurQuran — Sadaqah
+        </button>
         <div style={{display:'flex',gap:6}}>
           <button onClick={onAdmin} style={{flex:1,background:'var(--gold3)',border:'0.5px solid var(--border2)',borderRadius:8,padding:'8px',color:'var(--gold)',cursor:'pointer',fontSize:12,display:'flex',alignItems:'center',justifyContent:'center',gap:5,fontFamily:"'DM Sans',sans-serif"}}>
             🎙 Studio
