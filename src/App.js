@@ -89,13 +89,27 @@ body.light .mobile-header-bg{background:rgba(247,242,232,0.96)!important}
 .ayah-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;border:0.5px solid var(--border2);background:var(--gold3);color:var(--gold);font-size:11px;font-family:'Cormorant Garamond',serif;margin:0 3px;vertical-align:middle;cursor:pointer;transition:all 0.2s;flex-shrink:0}
 .ayah-num:hover,.ayah-num.done{background:var(--gold);color:#08100A;border-color:var(--gold)}
 .page-flip-enter{animation:flipIn 0.4s cubic-bezier(0.4,0,0.2,1) both}
-@media(max-width:768px){
-  .sidebar{display:none}
-  .main-area{margin-left:0}
+.ayah-word{cursor:pointer;transition:all 0.15s;border-radius:4px;padding:0 2px;display:inline}
+.ayah-word:hover{background:rgba(200,164,90,0.15)}
+:root{--quran-size:26px}
+body{--quran-font:'Amiri',serif}
+audio::-webkit-media-controls-panel{background:var(--bg3)!important}
+audio{filter:invert(0);border-radius:10px}
+.qari-pill{padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--cream3);cursor:pointer;font-size:12px;transition:all 0.15s;white-space:nowrap;font-family:'DM Sans',sans-serif}
+.qari-pill.active{border-color:var(--gold);background:var(--gold3);color:var(--gold)}
+.trans-pill{padding:4px 12px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--cream3);cursor:pointer;font-size:11px;transition:all 0.15s;font-family:'DM Sans',sans-serif}
+.trans-pill.active{border-color:var(--gold);background:var(--gold3);color:var(--gold)}
+@media(max-width:900px){
+  .sidebar{display:none!important}
+  .main-area{margin-left:0!important}
   .mobile-header{display:flex!important}
   .mobile-nav{display:flex!important}
-  .surah-grid{grid-template-columns:1fr;gap:0;padding:0}
-  .content-wrap{padding:0 0 80px}
+  .surah-grid{grid-template-columns:1fr!important;gap:0!important;padding:0!important}
+  .content-wrap{padding:0 0 80px!important;max-width:100%!important}
+}
+@media(max-width:600px){
+  .quran-text{font-size:22px!important;line-height:2.6!important}
+  .ayah-num{width:24px!important;height:24px!important;font-size:10px!important}
 }
 `;
 document.head.appendChild(gs);
@@ -129,10 +143,11 @@ const SCHOLARS = [
     ar: "ڈاکٹر اسرار احمد",
     desc: "Profound Quranic tafseer and Islamic revival movement",
     tag: "Tafseer · Urdu",
+    channel: "UCgRJCEWnPHYfioSlGnAE9_w",
     videos: [
-      {title:"Bayan ul Quran — Introduction",id:"Ll5LkbqXbBg"},
-      {title:"What is the Quran?",id:"bxOCGjQYygc"},
-      {title:"Purpose of Human Life",id:"eFqGBMTKBnM"},
+      {title:"Bayan ul Quran — Al-Fatiha",id:"pgZuWBOBdFI"},
+      {title:"Quran ki Zaroorat",id:"wMIQ8v6MNZU"},
+      {title:"Maqsad e Hayat",id:"lyRhPPJsOlw"},
     ]
   },
   {
@@ -140,10 +155,11 @@ const SCHOLARS = [
     ar: "مفتي منك",
     desc: "Practical Islamic guidance for modern life",
     tag: "Motivation · English",
+    channel: "UCBVMhSuBkBGnzLKSAbzQHpA",
     videos: [
-      {title:"Strengthen Your Connection with Allah",id:"3bLNPqmHMpU"},
-      {title:"The Power of Istighfar",id:"g6tVFDMjVSE"},
-      {title:"How to Read the Quran Daily",id:"oMkvFiWQNaI"},
+      {title:"Episode 1 — Motivation",id:"WdKFpMRmBqs"},
+      {title:"Getting Closer to Allah",id:"VXqMiJXXGVY"},
+      {title:"Power of Dua",id:"n5KXMsU4BEI"},
     ]
   },
   {
@@ -151,10 +167,11 @@ const SCHOLARS = [
     ar: "نعمان علي خان",
     desc: "Deep linguistic analysis of Quranic Arabic",
     tag: "Tafseer · English",
+    channel: "UCITtPY3T-DM6T_M_YzCwQDQ",
     videos: [
-      {title:"Quran for Young Adults",id:"Tnz5JXGgriQ"},
-      {title:"Why the Quran is Relevant Today",id:"SL3ZOqCUuoE"},
-      {title:"Surah Al-Fatiha — Understanding",id:"ghilMnES3sQ"},
+      {title:"Why Study the Quran",id:"T3bEFRNUmaA"},
+      {title:"Quran Weekly — Fatiha",id:"sEdkMxOlMhE"},
+      {title:"Stories of the Prophets",id:"4UtbJNAYDjQ"},
     ]
   },
   {
@@ -162,21 +179,23 @@ const SCHOLARS = [
     ar: "الشيخ عمر سليمان",
     desc: "Spiritual depth and contemporary relevance",
     tag: "Spirituality · English",
+    channel: "UCxd8RRgQ6jYMkTZn3XDqBNg",
     videos: [
-      {title:"Quran 30 for 30 — Day 1",id:"QJ5QmJWklec"},
-      {title:"The Greatest Verse in the Quran",id:"xDL6F5ZWrxA"},
-      {title:"How to Fall in Love with the Quran",id:"k_lIeHq8bKE"},
+      {title:"Quran 30 for 30",id:"IyJBKBRNI4k"},
+      {title:"Angels in Your Presence",id:"zvRdTm8lUjg"},
+      {title:"The Day of Judgement",id:"xXDsmh3Vq-E"},
     ]
   },
   {
     name: "Zakir Naik",
     ar: "ذاكر نايك",
-    desc: "Comparative religion and Quran & modern science",
+    desc: "Comparative religion and Quran and modern science",
     tag: "Dawah · English/Urdu",
+    channel: "UCQLmS_lHMaQeM4Bz-YWBEOQ",
     videos: [
       {title:"Quran and Modern Science",id:"PkuLcpS1q0o"},
-      {title:"Is the Quran the Word of God?",id:"eqHMSZHlHko"},
-      {title:"Islam and the 21st Century",id:"V4y5OQLT0pA"},
+      {title:"Is Quran Word of God",id:"eqHMSZHlHko"},
+      {title:"Purpose of Life",id:"3BYJK4tqtMA"},
     ]
   },
   {
@@ -184,10 +203,11 @@ const SCHOLARS = [
     ar: "ياسر قاضي",
     desc: "Scholarly Seerah, Aqeedah and Islamic history",
     tag: "Seerah · English",
+    channel: "UCeJFTtdEUuMKPDNKGVGdcNw",
     videos: [
-      {title:"Seerah — Birth of Prophet ﷺ",id:"OgW6H9bnMoA"},
-      {title:"The Miracles of the Quran",id:"fGn_oQMEZsA"},
-      {title:"Understanding Surah Al-Kahf",id:"DRujMCb77kU"},
+      {title:"Seerah of Prophet Muhammad",id:"mBYDVJYPVoM"},
+      {title:"Understanding the Quran",id:"j9fGFsv-qXQ"},
+      {title:"Miracles of the Quran",id:"fGn_oQMEZsA"},
     ]
   },
 ];
@@ -230,24 +250,19 @@ function SetupScreen({onDone}){
             We are not asking for your hours.<br/>Just <span style={{color:'var(--gold)',fontStyle:'normal',fontWeight:600}}>10 minutes a day</span> — to stay connected to God.<br/>For you. For your children. For generations.
           </div>
         </div>
-        <input value={name} onChange={e=>setName(e.target.value)} onKeyDown={e=>{if(e.key==='Enter'&&name.trim())onDone(name.trim())}} placeholder="Enter your name to begin" style={{width:'100%',background:'var(--bg3)',border:'1px solid var(--border2)',borderRadius:12,padding:'15px 20px',color:'var(--cream)',fontSize:16,outline:'none',textAlign:'center',letterSpacing:0.5,marginBottom:12,fontFamily:"'DM Sans',sans-serif"}}/>
-        {/* Support */}
-        <div style={{background:'var(--bg2)',border:'0.5px solid var(--border)',borderRadius:14,padding:'18px 22px',marginBottom:14}}>
-          <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:18,color:'var(--cream)',marginBottom:8}}>Support this work</div>
-          <div style={{fontSize:13,color:'var(--cream3)',lineHeight:1.8,marginBottom:14}}>If Allah has blessed you with wealth, a small contribution keeps this free for all.<br/><span style={{color:'var(--gold)'}}>If you cannot — please go ahead freely. This is sadaqah.</span></div>
-          <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:8,marginBottom:10}}>
-            {['₹50','₹100','₹200'].map(a=>(
-              <button key={a} className="tip" onClick={e=>{
-                document.querySelectorAll('.tip').forEach(b=>{b.style.borderColor='var(--border)';b.style.background='transparent';b.style.color='var(--cream3)'});
-                e.currentTarget.style.borderColor='var(--gold)';e.currentTarget.style.background='var(--gold3)';e.currentTarget.style.color='var(--gold)';
-              }} style={{padding:'10px',border:'0.5px solid var(--border)',borderRadius:10,background:'transparent',color:'var(--cream3)',fontFamily:"'Cormorant Garamond',serif",fontSize:17,cursor:'pointer',transition:'all 0.2s'}}>{a}</button>
-            ))}
-          </div>
-          <div style={{fontSize:11,color:'var(--cream3)',textAlign:'center',letterSpacing:0.3}}>100% transparent · You can tip anytime inside the app too</div>
-        </div>
+        <input value={name} onChange={e=>setName(e.target.value)} onKeyDown={e=>{if(e.key==='Enter'&&name.trim())onDone(name.trim())}} placeholder="Enter your name to begin" style={{width:'100%',background:'var(--bg3)',border:'1px solid var(--border2)',borderRadius:12,padding:'15px 20px',color:'var(--cream)',fontSize:16,outline:'none',textAlign:'center',letterSpacing:0.5,marginBottom:4,fontFamily:"'DM Sans',sans-serif"}}/>
+        {!name.trim()&&name.length>0&&<div style={{color:'var(--red)',fontSize:12,marginBottom:8,textAlign:'center'}}>Please enter your name to continue</div>}
+        {name.trim().length===0&&<div style={{height:12,marginBottom:4}}/>}
         <button onClick={()=>{if(name.trim())onDone(name.trim());else onDone('Guest')}} style={{width:'100%',background:'var(--gold)',border:'none',borderRadius:12,padding:'16px',color:'#08100A',fontFamily:"'Cormorant Garamond',serif",fontSize:20,fontWeight:600,cursor:'pointer',letterSpacing:1,marginBottom:10}}>Begin Reading</button>
-        <button onClick={()=>onDone(name.trim()||'Guest')} style={{width:'100%',background:'transparent',border:'0.5px solid var(--border)',borderRadius:12,padding:'13px',color:'var(--cream3)',fontFamily:"'Cormorant Garamond',serif",fontSize:15,cursor:'pointer'}}>I'll support later — continue free</button>
-        <div style={{marginTop:20,fontSize:11,color:'var(--cream3)',lineHeight:2,letterSpacing:0.3}}>All 114 Surahs · 5 Qaris · 6 Languages · Daily Recitations · Free Forever · No Ads</div>
+        <button onClick={()=>onDone(name.trim()||'Guest')} style={{width:'100%',background:'transparent',border:'0.5px solid var(--border)',borderRadius:12,padding:'13px',color:'var(--cream3)',fontFamily:"'Cormorant Garamond',serif",fontSize:15,cursor:'pointer'}}>Continue without name</button>
+        {/* Subtle support note */}
+        <div style={{marginTop:20,padding:'14px 18px',background:'var(--gold3)',border:'0.5px solid var(--border)',borderRadius:12,textAlign:'center'}}>
+          <div style={{fontSize:12,color:'var(--cream3)',lineHeight:1.9}}>
+            This app is free for every human on earth, forever.<br/>
+            <span style={{color:'var(--gold)',fontSize:13}}>If Allah has blessed you, you can support us anytime from inside the app.</span>
+          </div>
+        </div>
+        <div style={{marginTop:14,fontSize:11,color:'var(--cream3)',lineHeight:2,letterSpacing:0.3,textAlign:'center'}}>All 114 Surahs · 5 Qaris · 6 Languages · Daily Recitations · Free Forever · No Ads</div>
       </div>
     </div>
   );
@@ -272,7 +287,7 @@ function Sidebar({view,setView,pts,userName,theme,setTheme,onAdmin,completed,onL
       {/* Logo */}
       <div style={{padding:'20px 20px 12px',borderBottom:'0.5px solid var(--border)'}}>
         <div style={{fontFamily:'Amiri,serif',fontSize:10,color:'var(--gold)',opacity:0.45,letterSpacing:3,marginBottom:2}}>نور القرآن</div>
-        <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:26,color:'var(--gold)',letterSpacing:2}}>NurQuran</div>
+        <div onClick={()=>{const now=Date.now();const key='nq_tap';const taps=JSON.parse(localStorage.getItem(key)||'[]').filter(t=>now-t<1500);taps.push(now);localStorage.setItem(key,JSON.stringify(taps));if(taps.length>=3){onAdmin();localStorage.removeItem(key)}}} style={{fontFamily:"'Cormorant Garamond',serif",fontSize:26,color:'var(--gold)',letterSpacing:2,userSelect:'none',cursor:'default'}}>NurQuran</div>
       </div>
       {/* Compact profile strip */}
       <div onClick={()=>setView('profile')} style={{padding:'10px 18px',borderBottom:'0.5px solid var(--border)',cursor:'pointer',display:'flex',alignItems:'center',gap:10}}>
@@ -316,7 +331,7 @@ function Sidebar({view,setView,pts,userName,theme,setTheme,onAdmin,completed,onL
 
 /* ── MOBILE NAV ── */
 function MobileNav({view,setView}){
-  const tabs=[{v:'home',icon:'⌂',label:'Home'},{v:'search',icon:'◎',label:'Explore'},{v:'recitations',icon:'◈',label:'Recite'},{v:'scholars',icon:'▣',label:'Scholars'},{v:'leaderboard',icon:'◆',label:'Ranks'}];
+  const tabs=[{v:'home',icon:'⌂',label:'Home'},{v:'search',icon:'◎',label:'Explore'},{v:'recitations',icon:'◈',label:'Recite'},{v:'leaderboard',icon:'◆',label:'Ranks'},{v:'profile',icon:'◉',label:'Profile'}];
   return(
     <div className="mobile-nav">
       {tabs.map(t=>(
@@ -457,13 +472,15 @@ function HomeView({userName,pts,completed,setView,openSurah,lastRead,liveEpisode
   );
 }
 
-/* ── READER — continuous Quran page with page flip ── */
+/* ── READER — inline interaction, no popup ── */
 function ReaderView({surah,content,loading,completed,markRead,allSurahs,openSurah,showToast}){
-  const [popup,setPopup]=useState(null);
+  const [activeAyah,setActiveAyah]=useState(null);
   const [qari,setQari]=useState(QARIS[0]);
   const [translation,setTranslation]=useState(TRANSLATIONS[0]);
   const [flipping,setFlipping]=useState(false);
-  const [transText,setTransText]=useState({});
+  const [transCache,setTransCache]=useState({});
+  const [fontSize,setFontSize]=useState(26);
+  const [quranFont,setQuranFont]=useState('Amiri');
   const audioRef=useRef(null);
 
   const doFlip=(dir)=>{
@@ -477,29 +494,33 @@ function ReaderView({surah,content,loading,completed,markRead,allSurahs,openSura
     },400);
   };
 
-  // Load translation when popup opens or translation changes
-  useEffect(()=>{
-    if(!popup||!surah)return;
+  const getAudioUrl=(ayahN)=>{
+    const globalN=(SURAH_OFFSETS[surah.n-1]||1)+(ayahN-1);
+    return `https://cdn.islamic.network/quran/audio/128/${qari.id}/${globalN}.mp3`;
+  };
+
+  const loadTrans=(ayahN)=>{
     const key=translation.id+':'+surah.n;
-    if(transText[key])return;
+    if(transCache[key]) return;
     fetch(`https://api.alquran.cloud/v1/surah/${surah.n}/${translation.id}`)
       .then(r=>r.json())
       .then(d=>{
         const map={};
         d.data.ayahs.forEach(a=>{map[a.numberInSurah]=a.text});
-        setTransText(prev=>({...prev,[key]:map}));
+        setTransCache(prev=>({...prev,[key]:map}));
       }).catch(()=>{});
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[popup?.n,translation.id,surah?.n]);
-
-  const getTranslation=(ayahN)=>{
-    const key=translation.id+':'+surah.n;
-    return transText[key]?.[ayahN]||'Loading translation...';
   };
 
-  const getAudioUrl=(ayahN)=>{
-    const globalN=(SURAH_OFFSETS[surah.n-1]||1)+(ayahN-1);
-    return `https://cdn.islamic.network/quran/audio/128/${qari.id}/${globalN}.mp3`;
+  const getTrans=(n)=>{
+    const key=translation.id+':'+surah.n;
+    return transCache[key]?.[n]||null;
+  };
+
+  const tapAyah=(ayah)=>{
+    if(activeAyah?.n===ayah.n){setActiveAyah(null);return;}
+    setActiveAyah(ayah);
+    loadTrans(ayah.n);
+    setTimeout(()=>audioRef.current?.play(),200);
   };
 
   if(loading)return(
@@ -518,162 +539,160 @@ function ReaderView({surah,content,loading,completed,markRead,allSurahs,openSura
   return(
     <div style={{paddingBottom:20,animation:flipping?'flipIn 0.4s ease both':'none'}}>
 
-      {/* ── AYAH POPUP — everything inside, qari selector, translation, audio ── */}
-      {popup&&(
-        <div onClick={()=>setPopup(null)} style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.85)',zIndex:300,display:'flex',alignItems:'flex-end',justifyContent:'center',backdropFilter:'blur(10px)'}}>
-          <div onClick={e=>e.stopPropagation()} style={{background:'var(--bg2)',border:'0.5px solid var(--border2)',borderRadius:'22px 22px 0 0',width:'100%',maxWidth:720,maxHeight:'88vh',overflowY:'auto'}}>
-            
-            {/* Ayah header */}
-            <div style={{padding:'20px 24px 16px',borderBottom:'0.5px solid var(--border)',background:'radial-gradient(ellipse at 50% 0%,rgba(200,164,90,0.06) 0%,transparent 80%)'}}>
-              <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:14}}>
-                <div style={{fontFamily:'Amiri,serif',fontSize:11,color:'var(--gold)',letterSpacing:2,opacity:0.6}}>{surah.name.toUpperCase()} · AYAH {popup.n}</div>
-                <button onClick={()=>setPopup(null)} style={{background:'var(--bg4)',border:'none',color:'var(--cream3)',borderRadius:8,padding:'5px 12px',cursor:'pointer',fontSize:15}}>✕</button>
-              </div>
-              {/* Arabic text */}
-              <div style={{fontFamily:'Amiri,serif',fontSize:30,lineHeight:2.3,textAlign:'right',direction:'rtl',color:'var(--cream)',marginBottom:16}}>{popup.ar}</div>
-              {/* Translation */}
-              <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:17,lineHeight:1.9,color:'var(--cream2)',fontStyle:'italic',direction:translation.lang==='ur'?'rtl':'ltr',textAlign:translation.lang==='ur'?'right':'left'}}>
-                {getTranslation(popup.n)}
-              </div>
+      {/* Surah header */}
+      <div style={{borderBottom:'0.5px solid var(--border)',background:'radial-gradient(ellipse at 50% 0%,rgba(200,164,90,0.07) 0%,transparent 70%)'}}>
+        {/* Arabic title */}
+        <div style={{textAlign:'center',padding:'24px 20px 16px'}}>
+          <div style={{fontFamily:'Amiri,serif',fontSize:48,color:'var(--gold)',lineHeight:1.6,textShadow:'0 2px 30px rgba(200,164,90,0.25)'}}>{surah.ar}</div>
+          <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:15,color:'var(--cream3)',marginTop:4,letterSpacing:1.5}}>{surah.meaning} · {surah.type} · {surah.ayahs} Ayahs</div>
+          {surah.n!==9&&<div style={{fontFamily:'Amiri,serif',fontSize:22,color:'var(--cream2)',marginTop:12,opacity:0.55,lineHeight:2}}>بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ</div>}
+          {/* Progress + tools row */}
+          <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:8,marginTop:14,flexWrap:'wrap'}}>
+            <div style={{display:'flex',alignItems:'center',gap:6,padding:'5px 12px',background:'var(--bg3)',border:'0.5px solid var(--border)',borderRadius:20}}>
+              <div style={{width:40,height:3,background:'var(--bg4)',borderRadius:2}}><div style={{height:3,width:pct+'%',background:'var(--gold)',borderRadius:2,transition:'width 0.5s'}}/></div>
+              <span style={{fontSize:11,color:'var(--cream3)',fontVariantNumeric:'tabular-nums'}}>{totalDone}/{content.length}</span>
             </div>
-
-            {/* Audio player */}
-            <div style={{padding:'16px 24px',borderBottom:'0.5px solid var(--border)'}}>
-              <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:10}}>
-                <div style={{fontSize:12,color:'var(--cream3)'}}>🎵 {qari.name} · {qari.style}</div>
-              </div>
-              <audio
-                ref={audioRef}
-                key={qari.id+':'+popup.n}
-                src={getAudioUrl(popup.n)}
-                autoPlay
-                controls
-                style={{width:'100%',height:38,borderRadius:10}}
-                onError={e=>{e.target.load()}}
-              />
+            <div style={{display:'flex',alignItems:'center',background:'var(--bg3)',border:'0.5px solid var(--border)',borderRadius:20,overflow:'hidden'}}>
+              <button onClick={()=>setFontSize(f=>Math.max(18,f-2))} style={{background:'none',border:'none',color:'var(--cream3)',cursor:'pointer',padding:'5px 12px',fontSize:14,fontWeight:500}}>A−</button>
+              <span style={{fontSize:11,color:'var(--cream3)',minWidth:24,textAlign:'center'}}>{fontSize}</span>
+              <button onClick={()=>setFontSize(f=>Math.min(40,f+2))} style={{background:'none',border:'none',color:'var(--cream3)',cursor:'pointer',padding:'5px 12px',fontSize:14,fontWeight:500}}>A+</button>
             </div>
-
-            {/* Qari selector — tap to switch instantly */}
-            <div style={{padding:'14px 24px',borderBottom:'0.5px solid var(--border)'}}>
-              <div style={{fontSize:11,color:'var(--cream3)',letterSpacing:1,marginBottom:10}}>CHOOSE QARI — tap to switch</div>
-              <div style={{display:'flex',flexWrap:'wrap',gap:8}}>
-                {QARIS.map(q=>(
-                  <button key={q.id} onClick={()=>{setQari(q);setTimeout(()=>audioRef.current?.play(),100)}}
-                    style={{padding:'8px 14px',borderRadius:20,border:'1px solid',
-                      borderColor:qari.id===q.id?'var(--gold)':'var(--border)',
-                      background:qari.id===q.id?'var(--gold3)':'var(--bg3)',
-                      color:qari.id===q.id?'var(--gold)':'var(--cream3)',
-                      cursor:'pointer',fontSize:12,fontFamily:"'Cormorant Garamond',serif",
-                      transition:'all 0.15s',whiteSpace:'nowrap'
-                    }}>
-                    {qari.id===q.id?'▶ ':''}{q.name.split(' ').slice(-1)[0]}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Translation selector */}
-            <div style={{padding:'14px 24px',borderBottom:'0.5px solid var(--border)'}}>
-              <div style={{fontSize:11,color:'var(--cream3)',letterSpacing:1,marginBottom:10}}>TRANSLATION — tap to switch</div>
-              <div style={{display:'flex',flexWrap:'wrap',gap:8}}>
-                {TRANSLATIONS.map(t=>(
-                  <button key={t.id} onClick={()=>setTranslation(t)}
-                    style={{padding:'8px 14px',borderRadius:20,border:'1px solid',
-                      borderColor:translation.id===t.id?'var(--gold)':'var(--border)',
-                      background:translation.id===t.id?'var(--gold3)':'var(--bg3)',
-                      color:translation.id===t.id?'var(--gold)':'var(--cream3)',
-                      cursor:'pointer',fontSize:12,fontFamily:"'Cormorant Garamond',serif",
-                      transition:'all 0.15s'
-                    }}>
-                    {translation.id===t.id?'✓ ':''}{t.name.split(' — ')[0]}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Mark read button */}
-            <div style={{padding:'16px 24px'}}>
-              <button onClick={()=>{markRead(surah.n,popup.n,content.length);setPopup(null)}}
-                style={{width:'100%',background:completed[surah.n+':'+popup.n]?'var(--bg4)':'var(--gold)',border:'none',borderRadius:12,padding:'14px',cursor:'pointer',fontFamily:"'Cormorant Garamond',serif",fontSize:17,color:completed[surah.n+':'+popup.n]?'var(--gold)':'#08100A',letterSpacing:0.5}}>
-                {completed[surah.n+':'+popup.n]?'✓ Already Read · Go to next':'Mark as Read · +1 point'}
-              </button>
-            </div>
+            <select onChange={e=>setQuranFont(e.target.value)} value={quranFont} style={{background:'var(--bg3)',border:'0.5px solid var(--border)',borderRadius:20,padding:'5px 10px',color:'var(--cream3)',fontSize:11,cursor:'pointer',outline:'none'}}>
+              <option value="Amiri">Amiri</option>
+              <option value="Scheherazade New">Scheherazade</option>
+              <option value="serif">Classic</option>
+            </select>
+            <button onClick={()=>{content.forEach(a=>markRead(surah.n,a.n,content.length));showToast('✦ All ayahs marked as read!')}} style={{background:'var(--gold)',border:'none',borderRadius:20,padding:'5px 14px',color:'#08100A',cursor:'pointer',fontSize:11,fontFamily:"'Cormorant Garamond',serif",fontWeight:600}}>Mark All ✦</button>
           </div>
         </div>
-      )}
 
-      {/* Surah header */}
-      <div style={{textAlign:'center',padding:'28px 24px 18px',borderBottom:'0.5px solid var(--border)',background:'radial-gradient(ellipse at 50% 0%,rgba(200,164,90,0.06) 0%,transparent 70%)'}}>
-        <div style={{fontFamily:'Amiri,serif',fontSize:48,color:'var(--gold)',lineHeight:1.6,textShadow:'0 2px 20px rgba(200,164,90,0.2)'}}>{surah.ar}</div>
-        <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:15,color:'var(--cream3)',marginTop:6,letterSpacing:1.5}}>{surah.meaning} · {surah.type} · {surah.ayahs} Ayahs</div>
-        {surah.n!==9&&<div style={{fontFamily:'Amiri,serif',fontSize:24,color:'var(--cream2)',marginTop:16,opacity:0.6,lineHeight:2}}>بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ</div>}
-        <div style={{display:'flex',alignItems:'center',gap:10,justifyContent:'center',marginTop:16,flexWrap:'wrap'}}>
-          <div style={{height:2,width:60,background:'var(--bg4)',borderRadius:2}}><div style={{height:2,width:pct+'%',background:'var(--gold)',borderRadius:2}}/></div>
-          <div style={{fontSize:12,color:'var(--cream3)'}}>{pct}% complete</div>
-          <button onClick={()=>{content.forEach(a=>markRead(surah.n,a.n,content.length));showToast('✦ All ayahs marked as read!')}}
-            style={{background:'var(--gold3)',border:'0.5px solid var(--border2)',borderRadius:20,padding:'5px 16px',color:'var(--gold)',cursor:'pointer',fontSize:12,fontFamily:"'Cormorant Garamond',serif"}}>
-            Mark All Read
-          </button>
+        {/* Qari selector */}
+        <div style={{padding:'10px 16px',borderTop:'0.5px solid var(--border)',background:'rgba(0,0,0,0.15)'}}>
+          <div style={{fontSize:10,color:'var(--cream3)',letterSpacing:1.5,marginBottom:8,textAlign:'center'}}>RECITER — tap to switch</div>
+          <div style={{display:'flex',gap:6,justifyContent:'center',flexWrap:'wrap'}}>
+            {QARIS.map(q=>(
+              <button key={q.id} onClick={()=>{setQari(q);if(activeAyah)setTimeout(()=>audioRef.current?.play(),100)}}
+                className={'qari-pill'+(qari.id===q.id?' active':'')}>
+                {qari.id===q.id&&<span style={{marginRight:4}}>▶</span>}{q.name.split(' ').slice(-1)[0]}
+                {qari.id===q.id&&<span style={{marginLeft:4,fontSize:9,opacity:0.7}}>{q.style}</span>}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Translation selector */}
+        <div style={{padding:'10px 16px 14px',borderTop:'0.5px solid var(--border)',background:'rgba(0,0,0,0.1)'}}>
+          <div style={{fontSize:10,color:'var(--cream3)',letterSpacing:1.5,marginBottom:8,textAlign:'center'}}>TRANSLATION — tap to switch</div>
+          <div style={{display:'flex',gap:5,justifyContent:'center',flexWrap:'wrap'}}>
+            {TRANSLATIONS.map(t=>(
+              <button key={t.id} onClick={()=>{setTranslation(t);setTransCache({})}}
+                className={'trans-pill'+(translation.id===t.id?' active':'')}>
+                {t.name.split(' — ')[0]}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Quran page — premium book feel */}
-      <div style={{margin:'20px 16px 0'}}>
-        <div style={{background:'var(--bg2)',border:'1px solid var(--border2)',borderRadius:18,padding:'36px 30px',position:'relative',boxShadow:'0 12px 60px rgba(0,0,0,0.5),inset 0 1px 0 rgba(200,164,90,0.1)'}}>
-          {/* Geometric ornament top */}
-          <div style={{textAlign:'center',marginBottom:28}}>
-            <svg width="240" height="22" viewBox="0 0 240 22">
-              <line x1="0" y1="11" x2="95" y2="11" stroke="rgba(200,164,90,0.2)" strokeWidth="0.8"/>
-              <polygon points="104,4 110,11 104,18 98,11" fill="none" stroke="rgba(200,164,90,0.45)" strokeWidth="0.9"/>
-              <circle cx="120" cy="11" r="2" fill="rgba(200,164,90,0.55)"/>
-              <polygon points="136,4 130,11 136,18 142,11" fill="none" stroke="rgba(200,164,90,0.45)" strokeWidth="0.9"/>
-              <line x1="145" y1="11" x2="240" y2="11" stroke="rgba(200,164,90,0.2)" strokeWidth="0.8"/>
-            </svg>
-          </div>
-          {/* All ayahs flow continuously */}
-          <div className="quran-text">
-            {content.map(a=>(
+      {/* Quran text — inline expandable */}
+      <div style={{margin:'16px',background:'var(--bg2)',border:'1px solid var(--border2)',borderRadius:16,overflow:'hidden',boxShadow:'0 8px 40px rgba(0,0,0,0.3)'}}>
+        {/* Ornament */}
+        <div style={{textAlign:'center',padding:'20px 0 8px'}}>
+          <svg width="180" height="16" viewBox="0 0 180 16"><line x1="0" y1="8" x2="72" y2="8" stroke="rgba(200,164,90,0.2)" strokeWidth="0.8"/><polygon points="80,2 86,8 80,14 74,8" fill="none" stroke="rgba(200,164,90,0.4)" strokeWidth="0.8"/><circle cx="90" cy="8" r="1.5" fill="rgba(200,164,90,0.5)"/><polygon points="100,2 94,8 100,14 106,8" fill="none" stroke="rgba(200,164,90,0.4)" strokeWidth="0.8"/><line x1="108" y1="8" x2="180" y2="8" stroke="rgba(200,164,90,0.2)" strokeWidth="0.8"/></svg>
+        </div>
+
+        {/* Continuous text */}
+        <div style={{padding:'8px 24px 24px',fontFamily:quranFont+',serif',fontSize:fontSize,lineHeight:2.8,textAlign:'right',direction:'rtl',wordSpacing:6}}>
+          {content.map(a=>{
+            const isRead=!!completed[surah.n+':'+a.n];
+            const isActive=activeAyah?.n===a.n;
+            const trans=getTrans(a.n);
+            return(
               <span key={a.n}>
+                {/* Ayah text */}
                 <span
-                  style={{color:completed[surah.n+':'+a.n]?'var(--gold)':'var(--cream)',cursor:'pointer',transition:'color 0.2s',opacity:completed[surah.n+':'+a.n]?0.7:1}}
-                  onClick={()=>setPopup({ar:a.ar,n:a.n})}
+                  onClick={()=>tapAyah(a)}
+                  style={{color:isRead?'var(--gold)':isActive?'var(--cream)':'var(--cream)',opacity:isRead?0.65:1,cursor:'pointer',transition:'all 0.2s',background:isActive?'rgba(200,164,90,0.1)':'transparent',borderRadius:4,padding:'0 2px'}}
                 >{a.ar}</span>
+                {/* Ayah number badge */}
                 <span
-                  className={'ayah-num'+(completed[surah.n+':'+a.n]?' done':'')}
-                  onClick={()=>setPopup({ar:a.ar,n:a.n})}
+                  onClick={()=>tapAyah(a)}
+                  className={'ayah-num'+(isRead?' done':'')}
+                  style={{cursor:'pointer'}}
                 >{a.n}</span>
                 {' '}
+                {/* Inline expansion */}
+                {isActive&&(
+                  <span style={{display:'block',direction:'ltr',textAlign:'left',margin:'4px 0 16px',borderRadius:16,overflow:'hidden',border:'1px solid var(--border2)',background:'var(--bg3)'}}>
+                    {/* Ayah label bar */}
+                    <span style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'10px 16px',borderBottom:'0.5px solid var(--border)',background:'rgba(200,164,90,0.06)'}}>
+                      <span style={{fontFamily:'Amiri,serif',fontSize:11,color:'var(--gold)',letterSpacing:2,opacity:0.7}}>{surah.name.toUpperCase()} · AYAH {a.n}</span>
+                      <span onClick={(e)=>{e.stopPropagation();setActiveAyah(null)}} style={{cursor:'pointer',color:'var(--cream3)',fontSize:18,lineHeight:1,padding:'0 4px'}}>×</span>
+                    </span>
+                    {/* Translation */}
+                    <span style={{display:'block',padding:'14px 18px 10px',borderBottom:'0.5px solid var(--border)'}}>
+                      {trans?(
+                        <span style={{fontFamily:"'Cormorant Garamond',serif",fontSize:17,fontStyle:'italic',color:'var(--cream2)',lineHeight:1.9,display:'block',direction:translation.lang==='ur'?'rtl':'ltr',textAlign:translation.lang==='ur'?'right':'left'}}>{trans}</span>
+                      ):(
+                        <span style={{fontSize:13,color:'var(--cream3)',display:'block',animation:'pulse 1.5s infinite'}}>Loading {translation.name.split(' — ')[0]}...</span>
+                      )}
+                    </span>
+                    {/* Custom audio section */}
+                    <span style={{display:'block',padding:'14px 18px',borderBottom:'0.5px solid var(--border)',background:'rgba(0,0,0,0.2)'}}>
+                      <span style={{display:'flex',alignItems:'center',gap:10,marginBottom:10}}>
+                        <span style={{display:'flex',alignItems:'center',gap:6,padding:'4px 12px',background:'var(--gold3)',border:'0.5px solid var(--border2)',borderRadius:20}}>
+                          <span style={{fontSize:14}}>🎵</span>
+                          <span style={{fontFamily:"'Cormorant Garamond',serif",fontSize:13,color:'var(--gold)'}}>{qari.name}</span>
+                          <span style={{fontSize:10,color:'var(--cream3)',background:'var(--bg4)',padding:'2px 6px',borderRadius:10}}>{qari.style}</span>
+                        </span>
+                      </span>
+                      <audio
+                        ref={audioRef}
+                        key={qari.id+':'+a.n}
+                        src={getAudioUrl(a.n)}
+                        controls
+                        style={{width:'100%',height:36,borderRadius:10,accentColor:'#C8A45A',colorScheme:'dark'}}
+                        onError={e=>{e.target.load()}}
+                      />
+                    </span>
+                    {/* Mark read */}
+                    <span style={{display:'block',padding:'12px 14px'}}>
+                      <button
+                        onClick={(e)=>{e.stopPropagation();markRead(surah.n,a.n,content.length);setActiveAyah(null)}}
+                        style={{width:'100%',background:isRead?'transparent':'var(--gold)',border:isRead?'0.5px solid var(--border)':'none',borderRadius:10,padding:'12px',cursor:'pointer',fontFamily:"'Cormorant Garamond',serif",fontSize:16,color:isRead?'var(--gold)':'#08100A',letterSpacing:0.5,display:'flex',alignItems:'center',justifyContent:'center',gap:8}}
+                      >
+                        {isRead?<><span>✓</span><span>Already Read</span></>:<><span>✦</span><span>Mark as Read · +1 point</span></>}
+                      </button>
+                    </span>
+                  </span>
+                )}
               </span>
-            ))}
-          </div>
-          {/* Ornament bottom */}
-          <div style={{textAlign:'center',marginTop:32}}>
-            <svg width="120" height="16" viewBox="0 0 120 16">
-              <line x1="0" y1="8" x2="50" y2="8" stroke="rgba(200,164,90,0.18)" strokeWidth="0.8"/>
-              <circle cx="60" cy="8" r="3.5" fill="none" stroke="rgba(200,164,90,0.35)" strokeWidth="0.9"/>
-              <circle cx="60" cy="8" r="1.2" fill="rgba(200,164,90,0.4)"/>
-              <line x1="70" y1="8" x2="120" y2="8" stroke="rgba(200,164,90,0.18)" strokeWidth="0.8"/>
-            </svg>
-            <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:11,color:'rgba(200,164,90,0.3)',letterSpacing:3,marginTop:8}}>· {surah.n} ·</div>
-          </div>
+            );
+          })}
         </div>
-        <div style={{textAlign:'center',fontSize:12,color:'var(--cream3)',marginTop:10,letterSpacing:0.3}}>
-          Tap any ayah to read translation, hear recitation & switch qari
+
+        {/* Bottom ornament */}
+        <div style={{textAlign:'center',padding:'0 0 20px'}}>
+          <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:11,color:'rgba(200,164,90,0.3)',letterSpacing:3}}>· {surah.n} ·</div>
         </div>
+      </div>
+
+      <div style={{textAlign:'center',fontSize:11,color:'var(--cream3)',margin:'8px 0 12px',letterSpacing:0.5,display:'flex',alignItems:'center',justifyContent:'center',gap:6}}>
+        <span style={{fontSize:14}}>👆</span> Tap any ayah to read translation and hear recitation
       </div>
 
       {/* Page flip nav */}
-      <div style={{display:'flex',gap:0,margin:'16px 16px 0',border:'0.5px solid var(--border)',borderRadius:14,overflow:'hidden'}}>
+      <div style={{display:'flex',margin:'0 16px',border:'0.5px solid var(--border)',borderRadius:14,overflow:'hidden'}}>
         {prevS&&(
           <button onClick={()=>doFlip('prev')} disabled={flipping}
-            style={{flex:1,background:'var(--bg3)',border:'none',borderRight:'0.5px solid var(--border)',padding:'14px 16px',color:'var(--cream2)',cursor:'pointer',fontFamily:"'Cormorant Garamond',serif",fontSize:15,textAlign:'left',display:'flex',alignItems:'center',gap:8,transition:'background 0.15s'}}>
+            style={{flex:1,background:'var(--bg3)',border:'none',borderRight:'0.5px solid var(--border)',padding:'14px 16px',color:'var(--cream2)',cursor:'pointer',fontFamily:"'Cormorant Garamond',serif",fontSize:15,textAlign:'left',display:'flex',alignItems:'center',gap:8}}>
             <span style={{fontSize:22,color:'var(--gold)'}}>‹</span>
-            <div><div style={{fontSize:10,color:'var(--cream3)',marginBottom:2,letterSpacing:1}}>PREVIOUS</div>{prevS.name}</div>
+            <div><div style={{fontSize:10,color:'var(--cream3)',marginBottom:2,letterSpacing:1}}>PREV</div>{prevS.name}</div>
           </button>
         )}
         {nextS&&(
           <button onClick={()=>doFlip('next')} disabled={flipping}
-            style={{flex:1,background:'var(--bg3)',border:'none',padding:'14px 16px',color:'var(--cream2)',cursor:'pointer',fontFamily:"'Cormorant Garamond',serif",fontSize:15,textAlign:'right',display:'flex',alignItems:'center',justifyContent:'flex-end',gap:8,transition:'background 0.15s'}}>
+            style={{flex:1,background:'var(--bg3)',border:'none',padding:'14px 16px',color:'var(--cream2)',cursor:'pointer',fontFamily:"'Cormorant Garamond',serif",fontSize:15,textAlign:'right',display:'flex',alignItems:'center',justifyContent:'flex-end',gap:8}}>
             <div><div style={{fontSize:10,color:'var(--cream3)',marginBottom:2,letterSpacing:1}}>NEXT</div>{nextS.name}</div>
             <span style={{fontSize:22,color:'var(--gold)'}}>›</span>
           </button>
@@ -688,7 +707,8 @@ function RecitationsView({episodes,liveCount,loading,userName}){
   const [active,setActive]=useState(null);
   const [playing,setPlaying]=useState(false);
   const [tickIdx,setTickIdx]=useState(0);
-  const daysLeft=287;const pct=Math.round((365-daysLeft)/365*100);
+  const daysLeft=Math.max(0,Math.round((new Date('2027-02-16')-new Date())/86400000));
+  const pct=episodes.length>0?Math.round(episodes.length/365*100):0;
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(()=>{if(episodes.length>0&&!active)setActive(episodes[0]);},[episodes]);
@@ -836,7 +856,7 @@ function LeaderboardView({userName,pts,completed}){
 }
 
 /* ── PROFILE ── */
-function ProfileView({userName,pts,completed,theme,setTheme}){
+function ProfileView({userName,pts,completed,theme,setTheme,onLogout}){
   const [bio,setBio]=useState(()=>localStorage.getItem('nq_bio')||'');
   const [editing,setEditing]=useState(false);
   const [verse,setVerse]=useState(()=>localStorage.getItem('nq_verse')||'');
@@ -879,6 +899,9 @@ function ProfileView({userName,pts,completed,theme,setTheme}){
         ))}
       </div>
       <div style={{padding:'0 16px'}}>
+        <button onClick={onLogout} style={{width:'100%',marginBottom:12,background:'transparent',border:'0.5px solid var(--border)',borderRadius:12,padding:'13px',color:'var(--cream3)',fontFamily:"'Cormorant Garamond',serif",fontSize:15,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:8}}>
+          <span>⎋</span> Sign Out
+        </button>
         <div style={{background:'var(--gold3)',border:'0.5px solid var(--border2)',borderRadius:12,padding:'16px 20px',textAlign:'center',marginBottom:12}}>
           <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:16,color:'var(--cream)',marginBottom:6}}>Share your profile</div>
           <div style={{fontSize:12,color:'var(--cream3)',marginBottom:12}}>Copy this and share with friends to invite them to read together</div>
@@ -1149,8 +1172,9 @@ export default function App(){
   const [surah,setSurah]=useState(null);
   const [content,setContent]=useState(null);
   const [loading,setLoading]=useState(false);
-  const [completed,setCompleted]=useState(()=>{try{return JSON.parse(localStorage.getItem('nq_done')||'{}')}catch{return{}}});
-  const [pts,setPts]=useState(()=>parseInt(localStorage.getItem('nq_pts')||'0'));
+  const [completed,setCompleted]=useState(()=>{try{return JSON.parse(localStorage.getItem('nq_done_'+storedUser)||'{}')}catch{return{}}});
+  const storedUser = localStorage.getItem('nq_user')||'';
+  const [pts,setPts]=useState(()=>parseInt(localStorage.getItem('nq_pts_'+storedUser)||'0'));
   const [lastRead,setLastRead]=useState(()=>{try{return JSON.parse(localStorage.getItem('nq_last')||'null')}catch{return null}});
   const [toast,setToast]=useState(null);
   const [episodes,setEpisodes]=useState([]);
@@ -1165,8 +1189,8 @@ export default function App(){
     document.body.className=theme==='dark'?'':theme;
     localStorage.setItem('nq_theme',theme);
   },[theme]);
-  useEffect(()=>{localStorage.setItem('nq_done',JSON.stringify(completed));},[completed]);
-  useEffect(()=>{localStorage.setItem('nq_pts',pts);},[pts]);
+  useEffect(()=>{if(userName)localStorage.setItem('nq_done_'+userName,JSON.stringify(completed));},[completed,userName]);
+  useEffect(()=>{if(userName)localStorage.setItem('nq_pts_'+userName,pts);},[pts,userName]);
   useEffect(()=>{if(lastRead)localStorage.setItem('nq_last',JSON.stringify(lastRead));},[lastRead]);
   useEffect(()=>{getEpisodes().then(d=>{setEpisodes(d);setEpLoading(false)});},[]);
   useEffect(()=>{
@@ -1223,7 +1247,7 @@ export default function App(){
       {toast&&<Toast msg={toast}/>}
       {showAdmin&&<AdminRecorder onClose={()=>setShowAdmin(false)} onEpisodeAdded={ep=>{setEpisodes(prev=>[ep,...prev]);setShowAdmin(false);showToast('✦ Episode '+ep.day+' is now live')}}/>}
 
-      <Sidebar view={view} setView={setView} pts={pts} userName={userName} theme={theme} setTheme={setTheme} onAdmin={()=>setShowAdmin(true)} completed={completed} onLogout={()=>{localStorage.removeItem('nq_user');setUserName('');setView('home')}}/>
+      <Sidebar view={view} setView={setView} pts={pts} userName={userName} theme={theme} setTheme={setTheme} onAdmin={()=>setShowAdmin(true)} completed={completed} onLogout={()=>{localStorage.removeItem('nq_user');localStorage.removeItem('nq_last');setUserName('');setView('home');setCompleted({});setPts(0);setLastRead(null);}}/>
 
       <div className="main-area">
         {/* Mobile top header */}
@@ -1234,7 +1258,6 @@ export default function App(){
           </div>
           <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:20,color:'var(--gold)',letterSpacing:2}}>نور · Nur</div>
           <div style={{display:'flex',alignItems:'center',gap:6}}>
-            <button onClick={()=>setShowAdmin(true)} style={{background:'none',border:'none',color:'var(--cream3)',cursor:'pointer',fontSize:15,padding:'4px'}}>🎙</button>
             <button onClick={()=>setTheme(t=>{const themes=['dark','light','midnight','parchment'];return themes[(themes.indexOf(t)+1)%themes.length]})} style={{background:'var(--bg3)',border:'0.5px solid var(--border)',borderRadius:6,color:'var(--cream3)',cursor:'pointer',fontSize:13,padding:'4px 8px'}}>◑</button>
             <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:11,color:'var(--gold)',background:'var(--gold3)',padding:'4px 9px',borderRadius:16,border:'0.5px solid var(--border2)'}}>✦{pts}</div>
           </div>
@@ -1247,7 +1270,7 @@ export default function App(){
             {view==='recitations'&&<RecitationsView episodes={episodes} liveCount={liveCount} loading={epLoading} userName={userName}/>}
             {view==='leaderboard'&&<LeaderboardView userName={userName} pts={pts} completed={completed}/>}
             {view==='search'&&<SearchView openSurah={s=>{openSurah(s);}}/>}
-            {view==='profile'&&<ProfileView userName={userName} pts={pts} completed={completed} theme={theme} setTheme={setTheme}/>}
+            {view==='profile'&&<ProfileView userName={userName} pts={pts} completed={completed} theme={theme} setTheme={setTheme} onLogout={()=>{localStorage.removeItem('nq_user');localStorage.removeItem('nq_last');setUserName('');setView('home');setCompleted({});setPts(0);setLastRead(null);}}/>}
             {view==='about'&&<AboutView/>}
             {view==='privacy'&&<PrivacyView/>}
             {view==='scholars'&&<ScholarsView/>}
