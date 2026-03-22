@@ -166,20 +166,19 @@ export function CommentsSection({ episode, userName }) {
                   <button
                     onClick={() => handleLike(c.id)}
                     style={{
-                      background: 'none', border: 'none', cursor: isLiked ? 'default' : 'pointer',
+                      background: isLiked ? 'rgba(201,168,76,0.08)' : 'transparent',
+                      border: 'none', cursor: isLiked ? 'default' : 'pointer',
                       display: 'flex', alignItems: 'center', gap: 4,
                       color: isLiked ? '#C9A84C' : 'rgba(240,232,216,0.3)',
                       fontSize: 12, padding: '4px 8px',
-                      borderRadius: 20,
-                      background: isLiked ? 'rgba(201,168,76,0.08)' : 'transparent',
-                      transition: 'all 0.2s'
+                      borderRadius: 20, transition: 'all 0.2s'
                     }}
                   >
                     ♡ {c.likes > 0 ? c.likes : ''}
                   </button>
                 </div>
                 <div style={{
-                  fontSize: 14, color: 'rgba(240,232,216,0.8)',
+                  color: 'rgba(240,232,216,0.8)',
                   lineHeight: 1.7, paddingLeft: 36,
                   fontFamily: c.type === 'dua' ? "'Amiri',serif" : 'inherit',
                   fontSize: c.type === 'dua' ? 16 : 14

@@ -54,7 +54,7 @@ export function AdminRecorder({ onClose, onEpisodeAdded }) {
   const [level, setLevel] = useState(0);
   const [duration, setDuration] = useState(0);
   const [step, setStep] = useState('');
-  const [rawBlob, setRawBlob] = useState(null);
+  const [rawBlob, setRawBlob] = useState(null); // eslint-disable-line no-unused-vars
   const [processedBlob, setProcessedBlob] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [nextDay, setNextDay] = useState(1);
@@ -68,6 +68,7 @@ export function AdminRecorder({ onClose, onEpisodeAdded }) {
   const streamRef = useRef(null);
 
   useEffect(() => { if (authed) getNextDay().then(setNextDay); }, [authed]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => () => { cleanup(); if (previewUrl) URL.revokeObjectURL(previewUrl); }, []);
 
   const cleanup = () => {

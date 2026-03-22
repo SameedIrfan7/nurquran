@@ -489,7 +489,8 @@ function ReaderView({surah,content,loading,completed,markRead,allSurahs,openSura
         d.data.ayahs.forEach(a=>{map[a.numberInSurah]=a.text});
         setTransText(prev=>({...prev,[key]:map}));
       }).catch(()=>{});
-  },[popup,translation,surah]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[popup?.n,translation.id,surah?.n]);
 
   const getTranslation=(ayahN)=>{
     const key=translation.id+':'+surah.n;
@@ -689,6 +690,7 @@ function RecitationsView({episodes,liveCount,loading,userName}){
   const [tickIdx,setTickIdx]=useState(0);
   const daysLeft=287;const pct=Math.round((365-daysLeft)/365*100);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(()=>{if(episodes.length>0&&!active)setActive(episodes[0]);},[episodes]);
   useEffect(()=>{const t=setInterval(()=>setTickIdx(i=>(i+1)%ACTIVITY.length),3500);return()=>clearInterval(t);},[]);
 
@@ -1102,6 +1104,7 @@ class ErrorBoundary extends React.Component {
 }
 
 /* ── NOT FOUND / OFFLINE PAGE ── */
+// eslint-disable-next-line no-unused-vars
 function ErrorPage({type='notfound'}){
   const msgs = {
     notfound: {
@@ -1156,7 +1159,7 @@ export default function App(){
   const [showAdmin,setShowAdmin]=useState(false);
   const [theme,setTheme]=useState(()=>localStorage.getItem('nq_theme')||'dark');
   const presenceRef=useRef(null);
-  const [translationId,setTranslationId]=useState('en.sahih');
+  const [translationId]=useState('en.sahih'); // eslint-disable-line
 
   useEffect(()=>{
     document.body.className=theme==='dark'?'':theme;
