@@ -149,7 +149,6 @@ const FEATURED_SURAHS = [
 
 const ACTIVITY = ['Someone completed Al-Fatiha','A reader from Malaysia joined','New listener from Pakistan','Someone marked 10 ayahs in Ya-Sin','A reader finished Al-Ikhlas','Someone from Indonesia just joined','A reader completed their daily recitation','New reader from Bangladesh joined'];
 
-
 const SCHOLARS = [
   {
     name: "Dr. Israr Ahmed",
@@ -225,9 +224,8 @@ const SCHOLARS = [
   },
 ];
 
-// Global ayah number offsets per surah (for audio URLs)
 const SURAH_OFFSETS=[1,8,294,494,670,790,955,1121,1196,1325,1434,1557,1668,1711,1763,1862,1990,2101,2211,2309,2444,2522,2600,2718,2782,2859,3086,3179,3267,3336,3396,3430,3460,3533,3587,3632,3715,3897,3985,4060,4145,4199,4252,4341,4400,4437,4472,4510,4539,4557,4602,4662,4711,4773,4828,4906,5002,5031,5053,5077,5090,5104,5115,5126,5144,5156,5168,5198,5250,5302,5346,5374,5402,5422,5478,5518,5549,5580,5630,5672,5701,5720,5756,5781,5803,5825,5847,5869,5888,5914,5944,5964,5979,6000,6011,6019,6027,6046,6051,6059,6067,6078,6089,6097,6100,6109,6114,6118,6125,6128,6134,6137,6142,6146,6151,6157];
-const SURAHS=[{n:1,name:"Al-Fatiha",ar:"الفاتحة",meaning:"The Opening",ayahs:7,type:"Meccan"},{n:2,name:"Al-Baqara",ar:"البقرة",meaning:"The Cow",ayahs:286,type:"Medinan"},{n:3,name:"Ali 'Imran",ar:"آل عمران",meaning:"Family of Imran",ayahs:200,type:"Medinan"},{n:4,name:"An-Nisa",ar:"النساء",meaning:"The Women",ayahs:176,type:"Medinan"},{n:5,name:"Al-Ma'ida",ar:"المائدة",meaning:"The Table Spread",ayahs:120,type:"Medinan"},{n:6,name:"Al-An'am",ar:"الأنعام",meaning:"The Cattle",ayahs:165,type:"Meccan"},{n:7,name:"Al-A'raf",ar:"الأعراف",meaning:"The Heights",ayahs:206,type:"Meccan"},{n:8,name:"Al-Anfal",ar:"الأنفال",meaning:"Spoils of War",ayahs:75,type:"Medinan"},{n:9,name:"At-Tawba",ar:"التوبة",meaning:"The Repentance",ayahs:129,type:"Medinan"},{n:10,name:"Yunus",ar:"يونس",meaning:"Jonah",ayahs:109,type:"Meccan"},{n:11,name:"Hud",ar:"هود",meaning:"Hud",ayahs:123,type:"Meccan"},{n:12,name:"Yusuf",ar:"يوسف",meaning:"Joseph",ayahs:111,type:"Meccan"},{n:13,name:"Ar-Ra'd",ar:"الرعد",meaning:"The Thunder",ayahs:43,type:"Medinan"},{n:14,name:"Ibrahim",ar:"إبراهيم",meaning:"Abraham",ayahs:52,type:"Meccan"},{n:15,name:"Al-Hijr",ar:"الحجر",meaning:"The Rocky Tract",ayahs:99,type:"Meccan"},{n:16,name:"An-Nahl",ar:"النحل",meaning:"The Bee",ayahs:128,type:"Meccan"},{n:17,name:"Al-Isra",ar:"الإسراء",meaning:"The Night Journey",ayahs:111,type:"Meccan"},{n:18,name:"Al-Kahf",ar:"الكهف",meaning:"The Cave",ayahs:110,type:"Meccan"},{n:19,name:"Maryam",ar:"مريم",meaning:"Mary",ayahs:98,type:"Meccan"},{n:20,name:"Ta-Ha",ar:"طه",meaning:"Ta-Ha",ayahs:135,type:"Meccan"},{n:21,name:"Al-Anbiya",ar:"الأنبياء",meaning:"The Prophets",ayahs:112,type:"Meccan"},{n:22,name:"Al-Hajj",ar:"الحج",meaning:"The Pilgrimage",ayahs:78,type:"Medinan"},{n:23,name:"Al-Mu'minun",ar:"المؤمنون",meaning:"The Believers",ayahs:118,type:"Meccan"},{n:24,name:"An-Nur",ar:"النور",meaning:"The Light",ayahs:64,type:"Medinan"},{n:25,name:"Al-Furqan",ar:"الفرقان",meaning:"The Criterion",ayahs:77,type:"Meccan"},{n:26,name:"Ash-Shu'ara",ar:"الشعراء",meaning:"The Poets",ayahs:227,type:"Meccan"},{n:27,name:"An-Naml",ar:"النمل",meaning:"The Ant",ayahs:93,type:"Meccan"},{n:28,name:"Al-Qasas",ar:"القصص",meaning:"The Stories",ayahs:88,type:"Meccan"},{n:29,name:"Al-Ankabut",ar:"العنكبوت",meaning:"The Spider",ayahs:69,type:"Meccan"},{n:30,name:"Ar-Rum",ar:"الروم",meaning:"The Romans",ayahs:60,type:"Meccan"},{n:31,name:"Luqman",ar:"لقمان",meaning:"Luqman",ayahs:34,type:"Meccan"},{n:32,name:"As-Sajda",ar:"السجدة",meaning:"The Prostration",ayahs:30,type:"Meccan"},{n:33,name:"Al-Ahzab",ar:"الأحزاب",meaning:"The Combined Forces",ayahs:73,type:"Medinan"},{n:34,name:"Saba",ar:"سبأ",meaning:"Sheba",ayahs:54,type:"Meccan"},{n:35,name:"Fatir",ar:"فاطر",meaning:"Originator",ayahs:45,type:"Meccan"},{n:36,name:"Ya-Sin",ar:"يس",meaning:"Ya Sin",ayahs:83,type:"Meccan"},{n:37,name:"As-Saffat",ar:"الصافات",meaning:"Those who set the Ranks",ayahs:182,type:"Meccan"},{n:38,name:"Sad",ar:"ص",meaning:"The Letter Saad",ayahs:88,type:"Meccan"},{n:39,name:"Az-Zumar",ar:"الزمر",meaning:"The Troops",ayahs:75,type:"Meccan"},{n:40,name:"Ghafir",ar:"غافر",meaning:"The Forgiver",ayahs:85,type:"Meccan"},{n:41,name:"Fussilat",ar:"فصلت",meaning:"Explained in Detail",ayahs:54,type:"Meccan"},{n:42,name:"Ash-Shura",ar:"الشورى",meaning:"The Consultation",ayahs:53,type:"Meccan"},{n:43,name:"Az-Zukhruf",ar:"الزخرف",meaning:"Ornaments of Gold",ayahs:89,type:"Meccan"},{n:44,name:"Ad-Dukhan",ar:"الدخان",meaning:"The Smoke",ayahs:59,type:"Meccan"},{n:45,name:"Al-Jathiya",ar:"الجاثية",meaning:"The Crouching",ayahs:37,type:"Meccan"},{n:46,name:"Al-Ahqaf",ar:"الأحقاف",meaning:"The Sand Dunes",ayahs:35,type:"Meccan"},{n:47,name:"Muhammad",ar:"محمد",meaning:"Muhammad",ayahs:38,type:"Medinan"},{n:48,name:"Al-Fath",ar:"الفتح",meaning:"The Victory",ayahs:29,type:"Medinan"},{n:49,name:"Al-Hujurat",ar:"الحجرات",meaning:"The Rooms",ayahs:18,type:"Medinan"},{n:50,name:"Qaf",ar:"ق",meaning:"The Letter Qaf",ayahs:45,type:"Meccan"},{n:51,name:"Adh-Dhariyat",ar:"الذاريات",meaning:"The Winnowing Winds",ayahs:60,type:"Meccan"},{n:52,name:"At-Tur",ar:"الطور",meaning:"The Mount",ayahs:49,type:"Meccan"},{n:53,name:"An-Najm",ar:"النجم",meaning:"The Star",ayahs:62,type:"Meccan"},{n:54,name:"Al-Qamar",ar:"القمر",meaning:"The Moon",ayahs:55,type:"Meccan"},{n:55,name:"Ar-Rahman",ar:"الرحمان",meaning:"The Beneficent",ayahs:78,type:"Medinan"},{n:56,name:"Al-Waqi'a",ar:"الواقعة",meaning:"The Inevitable",ayahs:96,type:"Meccan"},{n:57,name:"Al-Hadid",ar:"الحديد",meaning:"The Iron",ayahs:29,type:"Medinan"},{n:58,name:"Al-Mujadila",ar:"المجادلة",meaning:"The Pleading Woman",ayahs:22,type:"Medinan"},{n:59,name:"Al-Hashr",ar:"الحشر",meaning:"The Exile",ayahs:24,type:"Medinan"},{n:60,name:"Al-Mumtahana",ar:"الممتحنة",meaning:"She that is Examined",ayahs:13,type:"Medinan"},{n:61,name:"As-Saf",ar:"الصف",meaning:"The Ranks",ayahs:14,type:"Medinan"},{n:62,name:"Al-Jumu'a",ar:"الجمعة",meaning:"Friday",ayahs:11,type:"Medinan"},{n:63,name:"Al-Munafiqun",ar:"المنافقون",meaning:"The Hypocrites",ayahs:11,type:"Medinan"},{n:64,name:"At-Taghabun",ar:"التغابن",meaning:"Mutual Disillusion",ayahs:18,type:"Medinan"},{n:65,name:"At-Talaq",ar:"الطلاق",meaning:"The Divorce",ayahs:12,type:"Medinan"},{n:66,name:"At-Tahrim",ar:"التحريم",meaning:"The Prohibition",ayahs:12,type:"Medinan"},{n:67,name:"Al-Mulk",ar:"الملك",meaning:"The Sovereignty",ayahs:30,type:"Meccan"},{n:68,name:"Al-Qalam",ar:"القلم",meaning:"The Pen",ayahs:52,type:"Meccan"},{n:69,name:"Al-Haqqa",ar:"الحاقة",meaning:"The Reality",ayahs:52,type:"Meccan"},{n:70,name:"Al-Ma'arij",ar:"المعارج",meaning:"The Ascending Stairways",ayahs:44,type:"Meccan"},{n:71,name:"Nuh",ar:"نوح",meaning:"Noah",ayahs:28,type:"Meccan"},{n:72,name:"Al-Jinn",ar:"الجن",meaning:"The Jinn",ayahs:28,type:"Meccan"},{n:73,name:"Al-Muzzammil",ar:"المزمل",meaning:"The Enshrouded One",ayahs:20,type:"Meccan"},{n:74,name:"Al-Muddaththir",ar:"المدثر",meaning:"The Cloaked One",ayahs:56,type:"Meccan"},{n:75,name:"Al-Qiyama",ar:"القيامة",meaning:"The Resurrection",ayahs:40,type:"Meccan"},{n:76,name:"Al-Insan",ar:"الإنسان",meaning:"The Man",ayahs:31,type:"Medinan"},{n:77,name:"Al-Mursalat",ar:"المرسلات",meaning:"The Emissaries",ayahs:50,type:"Meccan"},{n:78,name:"An-Naba",ar:"النبأ",meaning:"The Tidings",ayahs:40,type:"Meccan"},{n:79,name:"An-Nazi'at",ar:"النازعات",meaning:"Those who drag forth",ayahs:46,type:"Meccan"},{n:80,name:"Abasa",ar:"عبس",meaning:"He Frowned",ayahs:42,type:"Meccan"},{n:81,name:"At-Takwir",ar:"التكوير",meaning:"The Overthrowing",ayahs:29,type:"Meccan"},{n:82,name:"Al-Infitar",ar:"الإنفطار",meaning:"The Cleaving",ayahs:19,type:"Meccan"},{n:83,name:"Al-Mutaffifin",ar:"المطففين",meaning:"The Defrauding",ayahs:36,type:"Meccan"},{n:84,name:"Al-Inshiqaq",ar:"الإنشقاق",meaning:"The Sundering",ayahs:25,type:"Meccan"},{n:85,name:"Al-Buruj",ar:"البروج",meaning:"The Mansions of Stars",ayahs:22,type:"Meccan"},{n:86,name:"At-Tariq",ar:"الطارق",meaning:"The Nightcomer",ayahs:17,type:"Meccan"},{n:87,name:"Al-A'la",ar:"الأعلى",meaning:"The Most High",ayahs:19,type:"Meccan"},{n:88,name:"Al-Ghashiya",ar:"الغاشية",meaning:"The Overwhelming",ayahs:26,type:"Meccan"},{n:89,name:"Al-Fajr",ar:"الفجر",meaning:"The Dawn",ayahs:30,type:"Meccan"},{n:90,name:"Al-Balad",ar:"البلد",meaning:"The City",ayahs:20,type:"Meccan"},{n:91,name:"Ash-Shams",ar:"الشمس",meaning:"The Sun",ayahs:15,type:"Meccan"},{n:92,name:"Al-Layl",ar:"الليل",meaning:"The Night",ayahs:21,type:"Meccan"},{n:93,name:"Ad-Duha",ar:"الضحى",meaning:"The Morning Hours",ayahs:11,type:"Meccan"},{n:94,name:"Ash-Sharh",ar:"الشرح",meaning:"The Relief",ayahs:8,type:"Meccan"},{n:95,name:"At-Tin",ar:"التين",meaning:"The Fig",ayahs:8,type:"Meccan"},{n:96,name:"Al-Alaq",ar:"العلق",meaning:"The Clot",ayahs:19,type:"Meccan"},{n:97,name:"Al-Qadr",ar:"القدر",meaning:"The Power",ayahs:5,type:"Meccan"},{n:98,name:"Al-Bayyina",ar:"البينة",meaning:"The Clear Proof",ayahs:8,type:"Medinan"},{n:99,name:"Az-Zalzala",ar:"الزلزلة",meaning:"The Earthquake",ayahs:8,type:"Medinan"},{n:100,name:"Al-Adiyat",ar:"العاديات",meaning:"The Courser",ayahs:11,type:"Meccan"},{n:101,name:"Al-Qari'a",ar:"القارعة",meaning:"The Calamity",ayahs:11,type:"Meccan"},{n:102,name:"At-Takathur",ar:"التكاثر",meaning:"The Rivalry",ayahs:8,type:"Meccan"},{n:103,name:"Al-Asr",ar:"العصر",meaning:"The Declining Day",ayahs:3,type:"Meccan"},{n:104,name:"Al-Humaza",ar:"الهمزة",meaning:"The Traducer",ayahs:9,type:"Meccan"},{n:105,name:"Al-Fil",ar:"الفيل",meaning:"The Elephant",ayahs:5,type:"Meccan"},{n:106,name:"Quraysh",ar:"قريش",meaning:"Quraysh",ayahs:4,type:"Meccan"},{n:107,name:"Al-Ma'un",ar:"الماعون",meaning:"Small Kindnesses",ayahs:7,type:"Meccan"},{n:108,name:"Al-Kawthar",ar:"الكوثر",meaning:"The Abundance",ayahs:3,type:"Meccan"},{n:109,name:"Al-Kafirun",ar:"الكافرون",meaning:"The Disbelievers",ayahs:6,type:"Meccan"},{n:110,name:"An-Nasr",ar:"النصر",meaning:"The Divine Support",ayahs:3,type:"Medinan"},{n:111,name:"Al-Masad",ar:"المسد",meaning:"The Palm Fibre",ayahs:5,type:"Meccan"},{n:112,name:"Al-Ikhlas",ar:"الإخلاص",meaning:"The Sincerity",ayahs:4,type:"Meccan"},{n:113,name:"Al-Falaq",ar:"الفلق",meaning:"The Daybreak",ayahs:5,type:"Meccan"},{n:114,name:"An-Nas",ar:"الناس",meaning:"The Mankind",ayahs:6,type:"Meccan"}];
+const SURAHS=[{n:1,name:"Al-Fatiha",ar:"الفاتحة",meaning:"The Opening",ayahs:7,type:"Meccan"},{n:2,name:"Al-Baqara",ar:"البقرة",meaning:"The Cow",ayahs:286,type:"Medinan"},{n:3,name:"Ali 'Imran",ar:"آل عمران",meaning:"Family of Imran",ayahs:200,type:"Medinan"},{n:4,name:"An-Nisa",ar:"النساء",meaning:"The Women",ayahs:176,type:"Medinan"},{n:5,name:"Al-Ma'ida",ar:"المائدة",meaning:"The Table Spread",ayahs:120,type:"Medinan"},{n:6,name:"Al-An'am",ar:"الأنعام",meaning:"The Cattle",ayahs:165,type:"Meccan"},{n:7,name:"Al-A'raf",ar:"الأعراف",meaning:"The Heights",ayahs:206,type:"Meccan"},{n:8,name:"Al-Anfal",ar:"الأنفال",meaning:"Spoils of War",ayahs:75,type:"Medinan"},{n:9,name:"At-Tawba",ar:"التوبة",meaning:"The Repentance",ayahs:129,type:"Medinan"},{n:10,name:"Yunus",ar:"يونس",meaning:"Jonah",ayahs:109,type:"Meccan"},{n:11,name:"Hud",ar:"هود",meaning:"Hud",ayahs:123,type:"Meccan"},{n:12,name:"Yusuf",ar:"يوسف",meaning:"Joseph",ayahs:111,type:"Meccan"},{n:13,name:"Ar-Ra'd",ar:"الرعد",meaning:"The Thunder",ayahs:43,type:"Medinan"},{n:14,name:"Ibrahim",ar:"إبراهيم",meaning:"Abraham",ayahs:52,type:"Meccan"},{n:15,name:"Al-Hijr",ar:"الحجر",meaning:"The Rocky Tract",ayahs:99,type:"Meccan"},{n:16,name:"An-Nahl",ar:"النحل",meaning:"The Bee",ayahs:128,type:"Meccan"},{n:17,name:"Al-Isra",ar:"الإسراء",meaning:"The Night Journey",ayahs:111,type:"Meccan"},{n:18,name:"Al-Kahf",ar:"الكهف",meaning:"The Cave",ayahs:110,type:"Meccan"},{n:19,name:"Maryam",ar:"مريم",meaning:"Mary",ayahs:98,type:"Meccan"},{n:20,name:"Ta-Ha",ar:"طه",meaning:"Ta-Ha",ayahs:135,type:"Meccan"},{n:21,name:"Al-Anbiya",ar:"الأنبياء",meaning:"The Prophets",ayahs:112,type:"Meccan"},{n:22,name:"Al-Hajj",ar:"الحج",meaning:"The Pilgrimage",ayahs:78,type:"Medinan"},{n:23,name:"Al-Mu'minun",ar:"المؤمنون",meaning:"The Believers",ayahs:118,type:"Meccan"},{n:24,name:"An-Nur",ar:"النور",meaning:"The Light",ayahs:64,type:"Medinan"},{n:25,name:"Al-Furqan",ar:"الفرقان",meaning:"The Criterion",ayahs:77,type:"Meccan"},{n:26,name:"Ash-Shu'ara",ar:"الشعراء",meaning:"The Poets",ayahs:227,type:"Meccan"},{n:27,name:"An-Naml",ar:"النمل",meaning:"The Ant",ayahs:93,type:"Meccan"},{n:28,name:"Al-Qasas",ar:"القصص",meaning:"The Stories",ayahs:88,type:"Meccan"},{n:29,name:"Al-Ankabut",ar:"العنكبوت",meaning:"The Spider",ayahs:69,type:"Meccan"},{n:30,name:"Ar-Rum",ar:"الروم",meaning:"The Romans",ayahs:60,type:"Meccan"},{n:31,name:"Luqman",ar:"لقمان",meaning:"Luqman",ayahs:34,type:"Meccan"},{n:32,name:"As-Sajda",ar:"السجدة",meaning:"The Prostration",ayahs:30,type:"Meccan"},{n:33,name:"Al-Ahzab",ar:"الأحزاب",meaning:"The Combined Forces",ayahs:73,type:"Medinan"},{n:34,name:"Saba",ar:"سبأ",meaning:"Sheba",ayahs:54,type:"Meccan"},{n:35,name:"Fatir",ar:"فاطر",meaning:"Originator",ayahs:45,type:"Meccan"},{n:36,name:"Ya-Sin",ar:"يس",meaning:"Ya Sin",ayahs:83,type:"Meccan"},{n:37,name:"As-Saffat",ar:"الصافات",meaning:"Those who set the Ranks",ayahs:182,type:"Meccan"},{n:38,name:"Sad",ar:"ص",meaning:"The Letter Saad",ayahs:88,type:"Meccan"},{n:39,name:"Az-Zumar",ar:"الزمر",meaning:"The Troops",ayahs:75,type:"Meccan"},{n:40,name:"Ghafir",ar:"غافر",meaning:"The Forgiver",ayahs:85,type:"Meccan"},{n:41,name:"Fussilat",ar:"فصلت",meaning:"Explained in Detail",ayahs:54,type:"Meccan"},{n:42,name:"Ash-Shura",ar:"الشورى",meaning:"The Consultation",ayahs:53,type:"Meccan"},{n:43,name:"Az-Zukhruf",ar:"الزخرف",meaning:"Ornaments of Gold",ayahs:89,type:"Meccan"},{n:44,name:"Ad-Dukhan",ar:"الدخان",meaning:"The Smoke",ayahs:59,type:"Meccan"},{n:45,name:"Al-Jathiya",ar:"الجاثية",meaning:"The Crouching",ayahs:37,type:"Meccan"},{n:46,name:"Al-Ahqaf",ar:"الأحقاف",meaning:"The Sand Dunes",ayahs:35,type:"Meccan"},{n:47,name:"Muhammad",ar:"محمد",meaning:"Muhammad",ayahs:38,type:"Medinan"},{n:48,name:"Al-Fath",ar:"الفتح",meaning:"The Victory",ayahs:29,type:"Medinan"},{n:49,name:"Al-Hujurat",ar:"الحجرات",meaning:"The Rooms",ayahs:18,type:"Medinan"},{n:50,name:"Qaf",ar:"ق",meaning:"The Letter Qaf",ayahs:45,type:"Meccan"},{n:51,name:"Adh-Dhariyat",ar:"الذاريات",meaning:"The Winnowing Winds",ayahs:60,type:"Meccan"},{n:52,name:"At-Tur",ar:"الطور",meaning:"The Mount",ayahs:49,type:"Meccan"},{n:53,name:"An-Najm",ar:"النجم",meaning:"The Star",ayahs:62,type:"Meccan"},{n:54,name:"Al-Qamar",ar:"القمر",meaning:"The Moon",ayahs:55,type:"Meccan"},{n:55,name:"Ar-Rahman",ar:"الرحمان",meaning:"The Beneficent",ayahs:78,type:"Medinan"},{n:56,name:"Al-Waqi'a",ar:"الواقعة",meaning:"The Inevitable",ayahs:96,type:"Meccan"},{n:57,name:"Al-Hadid",ar:"الحديد",meaning:"The Iron",ayahs:29,type:"Medinan"},{n:58,name:"Al-Mujadila",ar:"المجادلة",meaning:"The Pleading Woman",ayahs:22,type:"Medinan"},{n:59,name:"Al-Hashr",ar:"الحشر",meaning:"The Exile",ayahs:24,type:"Medinan"},{n:60,name:"Al-Mumtahana",ar:"الممتحنة",meaning:"She that is Examined",ayahs:13,type:"Medinan"},{n:61,name:"As-Saf",ar:"الصف",meaning:"The Ranks",ayahs:14,type:"Medinan"},{n:62,name:"Al-Jumu'a",ar:"الجمعة",meaning:"Friday",ayahs:11,type:"Medinan"},{n:63,name:"Al-Munafiqun",ar:"المنافقون",meaning:"The Hypocrites",ayahs:11,type:"Medinan"},{n:64,name:"At-Taghabun",ar:"التكاثر",meaning:"Mutual Disillusion",ayahs:18,type:"Medinan"},{n:65,name:"At-Talaq",ar:"الطلاق",meaning:"The Divorce",ayahs:12,type:"Medinan"},{n:66,name:"At-Tahrim",ar:"التحريم",meaning:"The Prohibition",ayahs:12,type:"Medinan"},{n:67,name:"Al-Mulk",ar:"الملك",meaning:"The Sovereignty",ayahs:30,type:"Meccan"},{n:68,name:"Al-Qalam",ar:"القلم",meaning:"The Pen",ayahs:52,type:"Meccan"},{n:69,name:"Al-Haqqa",ar:"الحاقة",meaning:"The Reality",ayahs:52,type:"Meccan"},{n:70,name:"Al-Ma'arij",ar:"المعارج",meaning:"The Ascending Stairways",ayahs:44,type:"Meccan"},{n:71,name:"Nuh",ar:"نوح",meaning:"Noah",ayahs:28,type:"Meccan"},{n:72,name:"Al-Jinn",ar:"الجن",meaning:"The Jinn",ayahs:28,type:"Meccan"},{n:73,name:"Al-Muzzammil",ar:"المزمل",meaning:"The Enshrouded One",ayahs:20,type:"Meccan"},{n:74,name:"Al-Muddaththir",ar:"المدثر",meaning:"The Cloaked One",ayahs:56,type:"Meccan"},{n:75,name:"Al-Qiyama",ar:"القيامة",meaning:"The Resurrection",ayahs:40,type:"Meccan"},{n:76,name:"Al-Insan",ar:"الإنسان",meaning:"The Man",ayahs:31,type:"Medinan"},{n:77,name:"Al-Mursalat",ar:"المرسلات",meaning:"The Emissaries",ayahs:50,type:"Meccan"},{n:78,name:"An-Naba",ar:"النبأ",meaning:"The Tidings",ayahs:40,type:"Meccan"},{n:79,name:"An-Nazi'at",ar:"النازعات",meaning:"Those who drag forth",ayahs:46,type:"Meccan"},{n:80,name:"Abasa",ar:"عبس",meaning:"He Frowned",ayahs:42,type:"Meccan"},{n:81,name:"At-Takwir",ar:"التكوير",meaning:"The Overthrowing",ayahs:29,type:"Meccan"},{n:82,name:"Al-Infitar",ar:"الإنفطار",meaning:"The Cleaving",ayahs:19,type:"Meccan"},{n:83,name:"Al-Mutaffifin",ar:"المطففين",meaning:"The Defrauding",ayahs:36,type:"Meccan"},{n:84,name:"Al-Inshiqaq",ar:"الإنشقاق",meaning:"The Sundering",ayahs:25,type:"Meccan"},{n:85,name:"Al-Buruj",ar:"البروج",meaning:"The Mansions of Stars",ayahs:22,type:"Meccan"},{n:86,name:"At-Tariq",ar:"الطارق",meaning:"The Nightcomer",ayahs:17,type:"Meccan"},{n:87,name:"Al-A'la",ar:"الأعلى",meaning:"The Most High",ayahs:19,type:"Meccan"},{n:88,name:"Al-Ghashiya",ar:"الغاشية",meaning:"The Overwhelming",ayahs:26,type:"Meccan"},{n:89,name:"Al-Fajr",ar:"الفجر",meaning:"The Dawn",ayahs:30,type:"Meccan"},{n:90,name:"Al-Balad",ar:"البلد",meaning:"The City",ayahs:20,type:"Meccan"},{n:91,name:"Ash-Shams",ar:"الشمس",meaning:"The Sun",ayahs:15,type:"Meccan"},{n:92,name:"Al-Layl",ar:"الليل",meaning:"The Night",ayahs:21,type:"Meccan"},{n:93,name:"Ad-Duha",ar:"الضحى",meaning:"The Morning Hours",ayahs:11,type:"Meccan"},{n:94,name:"Ash-Sharh",ar:"الشرح",meaning:"The Relief",ayahs:8,type:"Meccan"},{n:95,name:"At-Tin",ar:"التين",meaning:"The Fig",ayahs:8,type:"Meccan"},{n:96,name:"Al-Alaq",ar:"العلق",meaning:"The Clot",ayahs:19,type:"Meccan"},{n:97,name:"Al-Qadr",ar:"القدر",meaning:"The Power",ayahs:5,type:"Meccan"},{n:98,name:"Al-Bayyina",ar:"البينة",meaning:"The Clear Proof",ayahs:8,type:"Medinan"},{n:99,name:"Az-Zalzala",ar:"الزلزلة",meaning:"The Earthquake",ayahs:8,type:"Medinan"},{n:100,name:"Al-Adiyat",ar:"العاديات",meaning:"The Courser",ayahs:11,type:"Meccan"},{n:101,name:"Al-Qari'a",ar:"القارعة",meaning:"The Calamity",ayahs:11,type:"Meccan"},{n:102,name:"At-Takathur",ar:"التكاثر",meaning:"The Rivalry",ayahs:8,type:"Meccan"},{n:103,name:"Al-Asr",ar:"العصر",meaning:"The Declining Day",ayahs:3,type:"Meccan"},{n:104,name:"Al-Humaza",ar:"الهمزة",meaning:"The Traducer",ayahs:9,type:"Meccan"},{n:105,name:"Al-Fil",ar:"الفيل",meaning:"The Elephant",ayahs:5,type:"Meccan"},{n:106,name:"Quraysh",ar:"قريش",meaning:"Quraysh",ayahs:4,type:"Meccan"},{n:107,name:"Al-Ma'un",ar:"الماعون",meaning:"Small Kindnesses",ayahs:7,type:"Meccan"},{n:108,name:"Al-Kawthar",ar:"الكوثر",meaning:"The Abundance",ayahs:3,type:"Meccan"},{n:109,name:"Al-Kafirun",ar:"الكافرون",meaning:"The Disbelievers",ayahs:6,type:"Meccan"},{n:110,name:"An-Nasr",ar:"النصر",meaning:"The Divine Support",ayahs:3,type:"Medinan"},{n:111,name:"Al-Masad",ar:"المسد",meaning:"The Palm Fibre",ayahs:5,type:"Meccan"},{n:112,name:"Al-Ikhlas",ar:"الإخلاص",meaning:"The Sincerity",ayahs:4,type:"Meccan"},{n:113,name:"Al-Falaq",ar:"الفلق",meaning:"The Daybreak",ayahs:5,type:"Meccan"},{n:114,name:"An-Nas",ar:"الناس",meaning:"The Mankind",ayahs:6,type:"Meccan"}];
 
 /* ── HELPERS ── */
 function Waveform({playing=true,color='#C8A45A',size=1}){
@@ -237,7 +235,6 @@ function Waveform({playing=true,color='#C8A45A',size=1}){
 function Toast({msg}){return <div style={{position:'fixed',top:70,left:'50%',transform:'translateX(-50%)',background:'var(--bg3)',border:'0.5px solid var(--border2)',borderRadius:30,padding:'10px 22px',zIndex:999,fontFamily:"'Cormorant Garamond',serif",fontSize:15,color:'var(--gold)',whiteSpace:'nowrap',animation:'fadeUp 0.3s ease both',boxShadow:'0 8px 40px rgba(0,0,0,0.5)'}}>{msg}</div>;}
 function GoldLine(){return <div style={{display:'flex',alignItems:'center',gap:10,padding:'0 20px',margin:'4px 0'}}><div style={{flex:1,height:'0.5px',background:'var(--border)'}}/><div style={{width:4,height:4,borderRadius:'50%',background:'var(--gold)',opacity:0.4}}/><div style={{flex:1,height:'0.5px',background:'var(--border)'}}/></div>;}
 
-// Check if episode is "live" — uploaded within last 3 hours
 function isEpisodeLive(ep) {
   if (!ep?.created_at) return false;
   const uploaded = new Date(ep.created_at).getTime();
@@ -264,7 +261,7 @@ function SetupScreen({onDone}){
   useEffect(()=>{
     const t=setInterval(()=>setSlide(s=>(s+1)%features.length),3500);
     return()=>clearInterval(t);
-  },[]);
+  },[features.length]);
 
   const handleBegin=()=>{
     if(!name.trim()){setNameErr(true);return;}
@@ -273,29 +270,19 @@ function SetupScreen({onDone}){
 
   return(
     <div style={{minHeight:'100vh',display:'flex',flexDirection:'column',background:'var(--bg)',position:'relative',overflow:'hidden'}}>
-      {/* Background radial glow */}
       <div style={{position:'absolute',top:0,left:0,right:0,height:'70vh',background:'radial-gradient(ellipse at 50% -10%,rgba(200,164,90,0.1) 0%,transparent 65%)',pointerEvents:'none'}}/>
       <div style={{position:'absolute',bottom:0,right:0,width:400,height:400,background:'radial-gradient(ellipse at right bottom,rgba(200,164,90,0.04) 0%,transparent 70%)',pointerEvents:'none'}}/>
-
-      {/* Main layout — split on desktop */}
       <div style={{flex:1,display:'flex',alignItems:'stretch',maxWidth:1100,margin:'0 auto',width:'100%',padding:'0 0'}}>
-
-        {/* LEFT — branding + carousel */}
         <div style={{flex:1,display:'flex',flexDirection:'column',justifyContent:'center',padding:'40px 48px',borderRight:'0.5px solid var(--border)'}}>
-          {/* Logo */}
           <div style={{marginBottom:40}}>
             <div style={{fontFamily:'Amiri,serif',fontSize:12,color:'var(--gold)',opacity:0.5,letterSpacing:3,marginBottom:4}}>نور القرآن</div>
             <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:48,fontWeight:300,color:'var(--cream)',letterSpacing:3,lineHeight:1}}>NurQuran</div>
             <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:16,fontStyle:'italic',color:'var(--cream3)',marginTop:6}}>The Light of the Quran</div>
           </div>
-
-          {/* Quote */}
           <div style={{marginBottom:40,padding:'20px 24px',background:'var(--gold3)',border:'0.5px solid var(--border2)',borderRadius:16,position:'relative'}}>
             <div style={{fontFamily:'Amiri,serif',fontSize:28,color:'var(--gold)',lineHeight:1.9,marginBottom:8,letterSpacing:1}}>اقْرَأْ بِاسْمِ رَبِّكَ</div>
             <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:15,fontStyle:'italic',color:'var(--cream2)',lineHeight:1.7}}>Read in the name of your Lord<br/><span style={{fontSize:13,color:'var(--cream3)'}}>— Surah Al-Alaq, the first revelation</span></div>
           </div>
-
-          {/* Feature carousel */}
           <div style={{background:'var(--bg2)',border:'0.5px solid var(--border)',borderRadius:16,padding:'22px 24px',minHeight:130,position:'relative',overflow:'hidden'}}>
             {features.map((f,i)=>(
               <div key={i} style={{position:i===0?'relative':'absolute',top:0,left:0,right:0,padding:'22px 24px',opacity:slide===i?1:0,transform:slide===i?'translateY(0)':'translateY(8px)',transition:'all 0.5s ease',pointerEvents:slide===i?'all':'none'}}>
@@ -309,15 +296,12 @@ function SetupScreen({onDone}){
                 </div>
               </div>
             ))}
-            {/* Dots */}
             <div style={{display:'flex',gap:5,justifyContent:'center',marginTop:8,paddingTop:100}}>
               {features.map((_,i)=>(
                 <div key={i} onClick={()=>setSlide(i)} style={{width:i===slide?20:6,height:6,borderRadius:3,background:i===slide?'var(--gold)':'var(--border2)',cursor:'pointer',transition:'all 0.3s'}}/>
               ))}
             </div>
           </div>
-
-          {/* Stats row */}
           <div style={{display:'flex',gap:16,marginTop:24}}>
             {[{n:'114',l:'Surahs'},{n:'6,236',l:'Ayahs'},{n:'5',l:'Qaris'},{n:'8',l:'Languages'}].map(s=>(
               <div key={s.l} style={{flex:1,textAlign:'center'}}>
@@ -327,20 +311,13 @@ function SetupScreen({onDone}){
             ))}
           </div>
         </div>
-
-        {/* RIGHT — sign in form */}
         <div style={{width:400,flexShrink:0,display:'flex',flexDirection:'column',justifyContent:'center',padding:'40px 40px'}}>
-
-          {/* Bismillah */}
           <div style={{textAlign:'center',marginBottom:32}}>
             <div style={{fontFamily:'Amiri,serif',fontSize:26,color:'var(--gold)',lineHeight:1.9,letterSpacing:1}}>بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ</div>
             <div style={{fontSize:11,color:'var(--cream3)',letterSpacing:1.5,marginTop:4}}>Begin with the name of Allah</div>
           </div>
-
           <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:26,color:'var(--cream)',marginBottom:6}}>Welcome</div>
           <div style={{fontSize:13,color:'var(--cream3)',lineHeight:1.7,marginBottom:28}}>Enter your name to begin your Quran journey. No account needed — just your name and intention.</div>
-
-          {/* Name input */}
           <div style={{marginBottom:16}}>
             <label style={{fontSize:11,color:'var(--cream3)',letterSpacing:1,display:'block',marginBottom:8}}>YOUR NAME</label>
             <input
@@ -352,37 +329,29 @@ function SetupScreen({onDone}){
             />
             {nameErr&&<div style={{color:'var(--red)',fontSize:12,marginTop:6}}>Please enter your name to begin</div>}
           </div>
-
-          {/* Coming soon badge */}
           <div style={{background:'rgba(200,164,90,0.06)',border:'0.5px solid var(--border)',borderRadius:10,padding:'10px 14px',marginBottom:20,display:'flex',gap:10,alignItems:'flex-start'}}>
             <span style={{fontSize:16,flexShrink:0}}>🔐</span>
             <div style={{fontSize:12,color:'var(--cream3)',lineHeight:1.7}}>
               <span style={{color:'var(--gold)'}}>Unique accounts coming soon</span> — your identity and progress will be fully secured so no two readers share the same data.
             </div>
           </div>
-
           <button onClick={handleBegin} style={{width:'100%',background:'var(--gold)',border:'none',borderRadius:12,padding:'15px',color:'#08100A',fontFamily:"'Cormorant Garamond',serif",fontSize:18,fontWeight:600,cursor:'pointer',letterSpacing:0.5,marginBottom:10,transition:'opacity 0.2s'}}>
             Begin Reading →
           </button>
           <button onClick={()=>onDone('Guest')} style={{width:'100%',background:'transparent',border:'0.5px solid var(--border)',borderRadius:12,padding:'13px',color:'var(--cream3)',fontFamily:"'Cormorant Garamond',serif",fontSize:14,cursor:'pointer',marginBottom:28}}>
             Continue as Guest
           </button>
-
-          {/* Support — subtle */}
           <div style={{borderTop:'0.5px solid var(--border)',paddingTop:20}}>
             <div style={{fontSize:12,color:'var(--cream3)',lineHeight:1.8,textAlign:'center'}}>
               This app is <span style={{color:'var(--cream)'}}>100% free</span>, no ads, no subscriptions.<br/>
               If Allah has blessed you, <span style={{color:'var(--gold)',cursor:'pointer'}} onClick={()=>window.open('https://ko-fi.com','_blank')}>support us here ↗</span> — sadaqah jariyah.
             </div>
           </div>
-
           <div style={{marginTop:16,fontSize:10,color:'var(--cream3)',textAlign:'center',opacity:0.6,lineHeight:1.9}}>
             All 114 Surahs · 5 Qaris · 8 Languages<br/>Daily Recitations · Free Forever · No Ads
           </div>
         </div>
       </div>
-
-      {/* Mobile layout override */}
       <style>{`
         @media(max-width:768px){
           .setup-left{display:none!important}
@@ -409,12 +378,10 @@ function Sidebar({view,setView,pts,userName,theme,setTheme,onAdmin,completed,onL
   ];
   return(
     <div className="sidebar">
-      {/* Logo */}
       <div style={{padding:'20px 20px 12px',borderBottom:'0.5px solid var(--border)'}}>
         <div style={{fontFamily:'Amiri,serif',fontSize:10,color:'var(--gold)',opacity:0.45,letterSpacing:3,marginBottom:2}}>نور القرآن</div>
         <div onClick={()=>{const now=Date.now();const key='nq_tap';const taps=JSON.parse(localStorage.getItem(key)||'[]').filter(t=>now-t<1500);taps.push(now);localStorage.setItem(key,JSON.stringify(taps));if(taps.length>=3){onAdmin();localStorage.removeItem(key)}}} style={{fontFamily:"'Cormorant Garamond',serif",fontSize:26,color:'var(--gold)',letterSpacing:2,userSelect:'none',cursor:'default'}}>NurQuran</div>
       </div>
-      {/* Compact profile strip */}
       <div onClick={()=>setView('profile')} style={{padding:'10px 18px',borderBottom:'0.5px solid var(--border)',cursor:'pointer',display:'flex',alignItems:'center',gap:10}}>
         <div style={{width:34,height:34,borderRadius:'50%',background:'var(--gold3)',border:'1px solid var(--border2)',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:"'Cormorant Garamond',serif",fontSize:14,color:'var(--gold)',flexShrink:0}}>{userName.slice(0,2).toUpperCase()}</div>
         <div style={{flex:1,minWidth:0}}>
@@ -422,7 +389,6 @@ function Sidebar({view,setView,pts,userName,theme,setTheme,onAdmin,completed,onL
           <div style={{fontSize:10,color:'var(--gold)',marginTop:1}}>✦ {pts} pts · {pct}% Quran</div>
         </div>
       </div>
-      {/* Nav */}
       <div style={{flex:1,padding:'8px 8px',overflowY:'auto'}}>
         {navItems.map(t=>(
           <button key={t.v} onClick={()=>setView(t.v)} style={{width:'100%',display:'flex',alignItems:'center',gap:10,padding:'9px 12px',borderRadius:9,border:'none',background:view===t.v?'var(--gold3)':'transparent',color:view===t.v?'var(--gold)':'var(--cream3)',cursor:'pointer',marginBottom:1,transition:'all 0.15s',textAlign:'left',borderLeft:view===t.v?'2px solid var(--gold)':'2px solid transparent'}}>
@@ -431,9 +397,7 @@ function Sidebar({view,setView,pts,userName,theme,setTheme,onAdmin,completed,onL
           </button>
         ))}
       </div>
-      {/* Bottom — compact */}
       <div style={{padding:'10px 12px',borderTop:'0.5px solid var(--border)'}}>
-        {/* Theme row */}
         <div style={{display:'flex',gap:5,marginBottom:8}}>
           {[['dark','🌑'],['light','☀'],['midnight','✦'],['parchment','🌿']].map(([t,icon])=>(
             <button key={t} onClick={()=>setTheme(t)} title={t} style={{flex:1,padding:'6px 0',borderRadius:7,border:'1px solid',borderColor:theme===t?'var(--gold)':'var(--border)',background:theme===t?'var(--gold3)':'var(--bg3)',color:theme===t?'var(--gold)':'var(--cream3)',cursor:'pointer',fontSize:13,transition:'all 0.15s'}}>
@@ -480,7 +444,6 @@ function HomeView({userName,pts,completed,setView,openSurah,lastRead,liveEpisode
 
   return(
     <div style={{paddingBottom:20}}>
-      {/* Hero with mosque image */}
       <div style={{position:'relative',overflow:'hidden',borderBottom:'0.5px solid var(--border)'}}>
         <div style={{position:'relative',height:260,overflow:'hidden'}}>
           <img src="https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?w=1200&q=85" alt="Masjid al-Haram" style={{width:'100%',height:'100%',objectFit:'cover',objectPosition:'center 40%',filter:'brightness(0.28) saturate(0.8)'}}/>
@@ -505,8 +468,6 @@ function HomeView({userName,pts,completed,setView,openSurah,lastRead,liveEpisode
         <div style={{textAlign:'center',fontSize:11,color:'var(--cream3)',letterSpacing:0.5}}>{totalRead.toLocaleString()} of 6,236 ayahs · {pct}% of the complete Quran</div>
         </div>
       </div>
-
-      {/* Stats */}
       <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:10,padding:'16px'}}>
         {[{l:'Points',v:pts.toLocaleString()},{l:'Ayahs Read',v:totalRead},{l:'Progress',v:pct+'%'}].map(s=>(
           <div key={s.l} style={{background:'var(--bg3)',border:'0.5px solid var(--border)',borderRadius:12,padding:'14px 10px',textAlign:'center'}}>
@@ -515,8 +476,6 @@ function HomeView({userName,pts,completed,setView,openSurah,lastRead,liveEpisode
           </div>
         ))}
       </div>
-
-      {/* Recitation strip — LIVE or COMING SOON */}
       <div onClick={()=>setView('recitations')} style={{margin:'0 16px 16px',background:'var(--bg3)',border:'0.5px solid var(--border2)',borderRadius:14,padding:'16px 18px',cursor:'pointer',position:'relative',overflow:'hidden'}}>
         <div style={{position:'absolute',top:0,right:0,width:'40%',height:'100%',background:'radial-gradient(ellipse at right,rgba(200,164,90,0.05) 0%,transparent 70%)',pointerEvents:'none'}}/>
         <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:10}}>
@@ -540,10 +499,7 @@ function HomeView({userName,pts,completed,setView,openSurah,lastRead,liveEpisode
           <span style={{fontSize:12,color:'var(--gold)'}}>Listen →</span>
         </div>
       </div>
-
       <GoldLine/>
-
-      {/* Showcase — what makes NurQuran different */}
       <div style={{padding:'0 16px 20px'}}>
         <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:11,color:'var(--gold)',letterSpacing:2,opacity:0.7,marginBottom:14}}>WHY NURQURAN</div>
         <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(220px,1fr))',gap:10}}>
@@ -563,11 +519,7 @@ function HomeView({userName,pts,completed,setView,openSurah,lastRead,liveEpisode
           ))}
         </div>
       </div>
-
       <GoldLine/>
-
-
-      {/* Featured Surahs — 8 most read */}
       <div style={{padding:'0 16px 20px'}}>
         <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:14}}>
           <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:11,color:'var(--gold)',letterSpacing:2,opacity:0.7}}>FEATURED SURAHS</div>
@@ -597,27 +549,22 @@ function HomeView({userName,pts,completed,setView,openSurah,lastRead,liveEpisode
             );
           })}
         </div>
-        {/* View all button bottom */}
         <div style={{textAlign:'center',marginTop:16}}>
           <button onClick={()=>setView('search')} style={{fontFamily:"'Cormorant Garamond',serif",fontSize:16,color:'var(--cream)',background:'var(--bg3)',border:'0.5px solid var(--border2)',borderRadius:12,padding:'12px 32px',cursor:'pointer',transition:'all 0.2s',display:'inline-flex',alignItems:'center',gap:8}}>
             <span>Explore All 114 Surahs</span><span style={{color:'var(--gold)'}}>→</span>
           </button>
         </div>
       </div>
-
-      {/* Daily Reminder / News section */}
       <GoldLine/>
       <div style={{padding:'16px 16px 20px'}}>
         <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:11,color:'var(--gold)',letterSpacing:2,opacity:0.7,marginBottom:14}}>DAILY REMINDER</div>
         <div style={{background:'var(--bg2)',border:'0.5px solid var(--border)',borderRadius:16,overflow:'hidden'}}>
-          {/* Today verse */}
           <div style={{padding:'20px 22px',borderBottom:'0.5px solid var(--border)',background:'radial-gradient(ellipse at right,rgba(200,164,90,0.04) 0%,transparent 70%)'}}>
             <div style={{fontSize:10,color:'var(--gold)',letterSpacing:2,marginBottom:10,opacity:0.7}}>VERSE OF THE DAY</div>
             <div style={{fontFamily:'Amiri,serif',fontSize:24,color:'var(--cream)',direction:'rtl',textAlign:'right',lineHeight:2,marginBottom:12}}>وَلَذِكْرُ اللَّهِ أَكْبَرُ</div>
             <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:16,fontStyle:'italic',color:'var(--cream2)',marginBottom:6}}>And the remembrance of Allah is greater.</div>
             <div style={{fontSize:11,color:'var(--cream3)',opacity:0.7}}>— Surah Al-Ankabut 29:45</div>
           </div>
-          {/* Updates */}
           {[
             {icon:'🌙',title:'Recitations begin March 25, 2026',desc:'Day 1 of 365 — Al-Fatiha. Subscribe to get notified when it goes live.'},
             {icon:'🔐',title:'Unique accounts — coming soon',desc:'Your identity and progress will be fully secured in the next update.'},
@@ -637,7 +584,7 @@ function HomeView({userName,pts,completed,setView,openSurah,lastRead,liveEpisode
   );
 }
 
-/* ── READER — inline interaction, no popup ── */
+/* ── READER ── */
 function ReaderView({surah,content,loading,completed,markRead,allSurahs,openSurah,showToast}){
   const [activeAyah,setActiveAyah]=useState(null);
   const [qari,setQari]=useState(QARIS[0]);
@@ -703,15 +650,11 @@ function ReaderView({surah,content,loading,completed,markRead,allSurahs,openSura
 
   return(
     <div style={{paddingBottom:20,animation:flipping?'flipIn 0.4s ease both':'none'}}>
-
-      {/* Surah header */}
       <div style={{borderBottom:'0.5px solid var(--border)',background:'radial-gradient(ellipse at 50% 0%,rgba(200,164,90,0.07) 0%,transparent 70%)'}}>
-        {/* Arabic title */}
         <div style={{textAlign:'center',padding:'24px 20px 16px'}}>
           <div style={{fontFamily:'Amiri,serif',fontSize:48,color:'var(--gold)',lineHeight:1.6,textShadow:'0 2px 30px rgba(200,164,90,0.25)'}}>{surah.ar}</div>
           <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:15,color:'var(--cream3)',marginTop:4,letterSpacing:1.5}}>{surah.meaning} · {surah.type} · {surah.ayahs} Ayahs</div>
           {surah.n!==9&&<div style={{fontFamily:'Amiri,serif',fontSize:22,color:'var(--cream2)',marginTop:12,opacity:0.55,lineHeight:2}}>بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ</div>}
-          {/* Progress + tools row */}
           <div style={{display:'flex',alignItems:'center',justifyContent:'center',gap:8,marginTop:14,flexWrap:'wrap'}}>
             <div style={{display:'flex',alignItems:'center',gap:6,padding:'5px 12px',background:'var(--bg3)',border:'0.5px solid var(--border)',borderRadius:20}}>
               <div style={{width:40,height:3,background:'var(--bg4)',borderRadius:2}}><div style={{height:3,width:pct+'%',background:'var(--gold)',borderRadius:2,transition:'width 0.5s'}}/></div>
@@ -730,8 +673,6 @@ function ReaderView({surah,content,loading,completed,markRead,allSurahs,openSura
             <button onClick={()=>{content.forEach(a=>markRead(surah.n,a.n,content.length));showToast('✦ All ayahs marked as read!')}} style={{background:'var(--gold)',border:'none',borderRadius:20,padding:'5px 14px',color:'#08100A',cursor:'pointer',fontSize:11,fontFamily:"'Cormorant Garamond',serif",fontWeight:600}}>Mark All ✦</button>
           </div>
         </div>
-
-        {/* Qari selector */}
         <div style={{padding:'10px 16px',borderTop:'0.5px solid var(--border)',background:'rgba(0,0,0,0.15)'}}>
           <div style={{fontSize:10,color:'var(--cream3)',letterSpacing:1.5,marginBottom:8,textAlign:'center'}}>RECITER — tap to switch</div>
           <div style={{display:'flex',gap:6,justifyContent:'center',flexWrap:'wrap'}}>
@@ -744,8 +685,6 @@ function ReaderView({surah,content,loading,completed,markRead,allSurahs,openSura
             ))}
           </div>
         </div>
-
-        {/* Translation selector */}
         <div style={{padding:'10px 16px 14px',borderTop:'0.5px solid var(--border)',background:'rgba(0,0,0,0.1)'}}>
           <div style={{fontSize:10,color:'var(--cream3)',letterSpacing:1.5,marginBottom:8,textAlign:'center'}}>TRANSLATION — tap to switch</div>
           <div style={{display:'flex',gap:5,justifyContent:'center',flexWrap:'wrap'}}>
@@ -758,15 +697,10 @@ function ReaderView({surah,content,loading,completed,markRead,allSurahs,openSura
           </div>
         </div>
       </div>
-
-      {/* Quran text — inline expandable */}
       <div style={{margin:'16px',background:'var(--bg2)',border:'1px solid var(--border2)',borderRadius:16,overflow:'hidden',boxShadow:'0 8px 40px rgba(0,0,0,0.3)'}}>
-        {/* Ornament */}
         <div style={{textAlign:'center',padding:'20px 0 8px'}}>
           <svg width="180" height="16" viewBox="0 0 180 16"><line x1="0" y1="8" x2="72" y2="8" stroke="rgba(200,164,90,0.2)" strokeWidth="0.8"/><polygon points="80,2 86,8 80,14 74,8" fill="none" stroke="rgba(200,164,90,0.4)" strokeWidth="0.8"/><circle cx="90" cy="8" r="1.5" fill="rgba(200,164,90,0.5)"/><polygon points="100,2 94,8 100,14 106,8" fill="none" stroke="rgba(200,164,90,0.4)" strokeWidth="0.8"/><line x1="108" y1="8" x2="180" y2="8" stroke="rgba(200,164,90,0.2)" strokeWidth="0.8"/></svg>
         </div>
-
-        {/* Continuous text */}
         <div style={{padding:'8px 24px 24px',fontFamily:quranFont+',serif',fontSize:fontSize,lineHeight:2.8,textAlign:'right',direction:'rtl',wordSpacing:6}}>
           {content.map(a=>{
             const isRead=!!completed[surah.n+':'+a.n];
@@ -774,27 +708,22 @@ function ReaderView({surah,content,loading,completed,markRead,allSurahs,openSura
             const trans=getTrans(a.n);
             return(
               <span key={a.n}>
-                {/* Ayah text */}
                 <span
                   onClick={()=>tapAyah(a)}
                   style={{color:isRead?'var(--gold)':isActive?'var(--cream)':'var(--cream)',opacity:isRead?0.65:1,cursor:'pointer',transition:'all 0.2s',background:isActive?'rgba(200,164,90,0.1)':'transparent',borderRadius:4,padding:'0 2px'}}
                 >{a.ar}</span>
-                {/* Ayah number badge */}
                 <span
                   onClick={()=>tapAyah(a)}
                   className={'ayah-num'+(isRead?' done':'')}
                   style={{cursor:'pointer'}}
                 >{a.n}</span>
                 {' '}
-                {/* Inline expansion */}
                 {isActive&&(
                   <span style={{display:'block',direction:'ltr',textAlign:'left',margin:'4px 0 16px',borderRadius:16,overflow:'hidden',border:'1px solid var(--border2)',background:'var(--bg3)'}}>
-                    {/* Ayah label bar */}
                     <span style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'10px 16px',borderBottom:'0.5px solid var(--border)',background:'rgba(200,164,90,0.06)'}}>
                       <span style={{fontFamily:'Amiri,serif',fontSize:11,color:'var(--gold)',letterSpacing:2,opacity:0.7}}>{surah.name.toUpperCase()} · AYAH {a.n}</span>
                       <span onClick={(e)=>{e.stopPropagation();setActiveAyah(null)}} style={{cursor:'pointer',color:'var(--cream3)',fontSize:18,lineHeight:1,padding:'0 4px'}}>×</span>
                     </span>
-                    {/* Translation */}
                     <span style={{display:'block',padding:'14px 18px 10px',borderBottom:'0.5px solid var(--border)'}}>
                       {trans?(
                         <span style={{fontFamily:"'Cormorant Garamond',serif",fontSize:17,fontStyle:'italic',color:'var(--cream2)',lineHeight:1.9,display:'block',direction:translation.lang==='ur'?'rtl':'ltr',textAlign:translation.lang==='ur'?'right':'left'}}>{trans}</span>
@@ -802,7 +731,6 @@ function ReaderView({surah,content,loading,completed,markRead,allSurahs,openSura
                         <span style={{fontSize:13,color:'var(--cream3)',display:'block',animation:'pulse 1.5s infinite'}}>Loading {translation.name.split(' — ')[0]}...</span>
                       )}
                     </span>
-                    {/* Custom audio section */}
                     <span style={{display:'block',padding:'14px 18px',borderBottom:'0.5px solid var(--border)',background:'rgba(0,0,0,0.2)'}}>
                       <span style={{display:'flex',alignItems:'center',gap:10,marginBottom:10}}>
                         <span style={{display:'flex',alignItems:'center',gap:6,padding:'4px 12px',background:'var(--gold3)',border:'0.5px solid var(--border2)',borderRadius:20}}>
@@ -820,7 +748,6 @@ function ReaderView({surah,content,loading,completed,markRead,allSurahs,openSura
                         onError={e=>{e.target.load()}}
                       />
                     </span>
-                    {/* Mark read */}
                     <span style={{display:'block',padding:'12px 14px'}}>
                       <button
                         onClick={(e)=>{e.stopPropagation();markRead(surah.n,a.n,content.length);setActiveAyah(null)}}
@@ -835,18 +762,13 @@ function ReaderView({surah,content,loading,completed,markRead,allSurahs,openSura
             );
           })}
         </div>
-
-        {/* Bottom ornament */}
         <div style={{textAlign:'center',padding:'0 0 20px'}}>
           <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:11,color:'rgba(200,164,90,0.3)',letterSpacing:3}}>· {surah.n} ·</div>
         </div>
       </div>
-
       <div style={{textAlign:'center',fontSize:11,color:'var(--cream3)',margin:'8px 0 12px',letterSpacing:0.5,display:'flex',alignItems:'center',justifyContent:'center',gap:6}}>
         <span style={{fontSize:14}}>👆</span> Tap any ayah to read translation and hear recitation
       </div>
-
-      {/* Page flip nav */}
       <div style={{display:'flex',margin:'0 16px',border:'0.5px solid var(--border)',borderRadius:14,overflow:'hidden'}}>
         {prevS&&(
           <button onClick={()=>doFlip('prev')} disabled={flipping}
@@ -875,8 +797,7 @@ function RecitationsView({episodes,liveCount,loading,userName}){
   const daysLeft=Math.max(0,Math.round((new Date('2027-02-16')-new Date())/86400000));
   const pct=episodes.length>0?Math.round(episodes.length/365*100):0;
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(()=>{if(episodes.length>0&&!active)setActive(episodes[0]);},[episodes]);
+  useEffect(()=>{if(episodes.length>0&&!active)setActive(episodes[0]);},[episodes, active]);
   useEffect(()=>{const t=setInterval(()=>setTickIdx(i=>(i+1)%ACTIVITY.length),3500);return()=>clearInterval(t);},[]);
 
   const live=isEpisodeLive(active);
@@ -931,16 +852,12 @@ function RecitationsView({episodes,liveCount,loading,userName}){
           )}
         </div>
       </div>
-
-      {/* Live ticker */}
       <div style={{margin:'0 16px 14px',background:'var(--bg3)',border:'0.5px solid var(--border)',borderRadius:12,padding:'11px 16px'}}>
         <div style={{display:'flex',alignItems:'center',gap:10}}>
           <div style={{width:6,height:6,borderRadius:'50%',background:'var(--gold)',animation:'pulse 1.8s infinite',flexShrink:0}}/>
           <div style={{fontSize:12,color:'var(--cream2)',whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis'}}>{ACTIVITY[tickIdx]}</div>
         </div>
       </div>
-
-      {/* Ramadan countdown */}
       <div style={{margin:'0 16px 16px',background:'var(--bg3)',border:'0.5px solid var(--border)',borderRadius:14,padding:'18px 20px'}}>
         <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:14}}>
           <div>
@@ -952,9 +869,7 @@ function RecitationsView({episodes,liveCount,loading,userName}){
         <div style={{height:4,background:'var(--bg4)',borderRadius:4}}><div style={{height:'100%',width:pct+'%',background:'linear-gradient(90deg,var(--gold2),var(--gold))',borderRadius:4}}/></div>
         <div style={{display:'flex',justifyContent:'space-between',marginTop:8,fontSize:11,color:'var(--cream3)'}}><span>Mar 25, 2026</span><span style={{color:'var(--gold)'}}>☽ Ramadan 2027</span></div>
       </div>
-
       <GoldLine/>
-
       <div style={{padding:'12px 16px 4px',fontFamily:"'Cormorant Garamond',serif",fontSize:11,color:'var(--gold)',letterSpacing:2,opacity:0.7}}>ALL EPISODES</div>
       {episodes.length===0&&!loading&&(
         <div style={{padding:'40px 20px',textAlign:'center'}}>
@@ -1029,14 +944,11 @@ function ProfileView({userName,pts,completed,theme,setTheme,onLogout}){
   const pct=Math.round(totalRead/6236*100);
   return(
     <div style={{paddingBottom:20}}>
-      {/* Profile hero */}
       <div style={{padding:'32px 24px 24px',textAlign:'center',borderBottom:'0.5px solid var(--border)',background:'radial-gradient(ellipse at 50% 0%,rgba(200,164,90,0.06) 0%,transparent 70%)'}}>
         <div style={{width:80,height:80,borderRadius:'50%',background:'var(--gold3)',border:'2px solid var(--border2)',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:"'Cormorant Garamond',serif",fontSize:32,color:'var(--gold)',margin:'0 auto 16px'}}>{userName.slice(0,2).toUpperCase()}</div>
         <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:28,color:'var(--cream)',marginBottom:4}}>{userName}</div>
         <div style={{fontSize:13,color:'var(--gold)',marginBottom:16}}>✦ {pts.toLocaleString()} points · {totalRead.toLocaleString()} ayahs read</div>
-        {/* Progress ring substitute */}
         <div style={{display:'inline-block',background:'var(--gold3)',border:'0.5px solid var(--border2)',borderRadius:20,padding:'6px 18px',fontFamily:"'Cormorant Garamond',serif",fontSize:15,color:'var(--gold)',marginBottom:20}}>{pct}% of the complete Quran</div>
-        {/* Bio */}
         <div style={{maxWidth:480,margin:'0 auto'}}>
           {editing?(
             <div>
@@ -1054,7 +966,6 @@ function ProfileView({userName,pts,completed,theme,setTheme,onLogout}){
           )}
         </div>
       </div>
-      {/* Stats */}
       <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:10,padding:'20px 16px'}}>
         {[{l:'Total Points',v:pts.toLocaleString()},{l:'Ayahs Read',v:totalRead.toLocaleString()},{l:'Surahs Started',v:Object.keys(completed).map(k=>k.split(':')[0]).filter((v,i,a)=>a.indexOf(v)===i).length},{l:'Quran Progress',v:pct+'%'}].map(s=>(
           <div key={s.l} style={{background:'var(--bg3)',border:'0.5px solid var(--border)',borderRadius:12,padding:'16px',textAlign:'center'}}>
@@ -1072,7 +983,6 @@ function ProfileView({userName,pts,completed,theme,setTheme,onLogout}){
           <div style={{fontSize:12,color:'var(--cream3)',marginBottom:12}}>Copy this and share with friends to invite them to read together</div>
           <div style={{background:'var(--bg3)',borderRadius:8,padding:'10px 14px',fontFamily:"'Cormorant Garamond',serif",fontSize:14,color:'var(--gold)',wordBreak:'break-all'}}>I have read {totalRead} ayahs of the Quran on NurQuran ({pct}%). Join me — it is free! 🌙</div>
         </div>
-        {/* Coming soon notice */}
         <div style={{background:'var(--bg3)',border:'0.5px solid var(--border)',borderRadius:12,padding:'16px 20px'}}>
           <div style={{fontFamily:'Amiri,serif',fontSize:16,color:'var(--gold)',marginBottom:6,textAlign:'center'}}>قَرِيبًا إِن شَاءَ اللَّه</div>
           <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:14,color:'var(--cream)',marginBottom:8,textAlign:'center'}}>Coming in the next update</div>
@@ -1170,7 +1080,6 @@ function SearchView({openSurah}){
   );
 }
 
-
 /* ── SCHOLARS VIEW ── */
 function ScholarsView(){
   const [activeScholar,setActiveScholar]=useState(SCHOLARS[0]);
@@ -1178,14 +1087,11 @@ function ScholarsView(){
 
   return(
     <div style={{paddingBottom:20}}>
-      {/* Header */}
       <div style={{padding:'28px 24px 20px',borderBottom:'0.5px solid var(--border)',background:'radial-gradient(ellipse at 50% 0%,rgba(200,164,90,0.05) 0%,transparent 70%)'}}>
         <div style={{fontFamily:'Amiri,serif',fontSize:11,color:'var(--gold)',opacity:0.55,letterSpacing:3,marginBottom:8}}>ISLAMIC KNOWLEDGE</div>
         <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:36,fontWeight:300,lineHeight:1.2,color:'var(--cream)',marginBottom:6}}>Learn from<br/><em style={{color:'var(--gold)'}}>great scholars</em></div>
         <div style={{fontSize:13,color:'var(--cream3)',lineHeight:1.7}}>Watch lectures, tafseer, and bayans from the most trusted Islamic scholars. Deepen your understanding of the Quran.</div>
       </div>
-
-      {/* Scholar selector - horizontal scroll */}
       <div style={{overflowX:'auto',padding:'16px 16px 8px',display:'flex',gap:10,scrollbarWidth:'none'}}>
         {SCHOLARS.map(s=>(
           <button key={s.name} onClick={()=>{setActiveScholar(s);setActiveVid(s.videos[0])}} style={{
@@ -1198,8 +1104,6 @@ function ScholarsView(){
           }}>{s.name}</button>
         ))}
       </div>
-
-      {/* Active scholar card */}
       <div style={{margin:'8px 16px 16px',background:'var(--bg3)',border:'0.5px solid var(--border2)',borderRadius:16,overflow:'hidden'}}>
         <div style={{padding:'18px 20px 16px',borderBottom:'0.5px solid var(--border)'}}>
           <div style={{display:'flex',alignItems:'flex-start',justifyContent:'space-between',gap:12}}>
@@ -1211,8 +1115,6 @@ function ScholarsView(){
             <div style={{flexShrink:0,background:'var(--gold3)',border:'0.5px solid var(--border2)',borderRadius:20,padding:'4px 12px',fontSize:11,color:'var(--gold)',letterSpacing:0.5,whiteSpace:'nowrap'}}>{activeScholar.tag}</div>
           </div>
         </div>
-
-        {/* Video player */}
         <div style={{position:'relative',paddingBottom:'56.25%',height:0,background:'#000'}}>
           <iframe
             key={activeVid.id}
@@ -1222,8 +1124,6 @@ function ScholarsView(){
             title={activeVid.title}
           />
         </div>
-
-        {/* Video list */}
         <div style={{padding:'12px 0'}}>
           <div style={{padding:'0 16px 10px',fontSize:11,color:'var(--cream3)',letterSpacing:1}}>MORE LECTURES</div>
           {activeScholar.videos.map((v,i)=>(
@@ -1241,8 +1141,6 @@ function ScholarsView(){
           ))}
         </div>
       </div>
-
-      {/* All scholars grid */}
       <div style={{padding:'0 16px 4px',fontFamily:"'Cormorant Garamond',serif",fontSize:11,color:'var(--gold)',letterSpacing:2,opacity:0.7}}>ALL SCHOLARS</div>
       <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(260px,1fr))',gap:10,padding:'10px 16px'}}>
         {SCHOLARS.map(s=>(
@@ -1263,12 +1161,11 @@ function ScholarsView(){
   );
 }
 
-
 /* ── ERROR BOUNDARY ── */
 class ErrorBoundary extends React.Component {
   constructor(props) { super(props); this.state = { hasError: false, error: null }; }
   static getDerivedStateFromError(error) { return { hasError: true, error }; }
-  componentDidCatch(error, info) { /* silent — no console logs shown to user */ }
+  componentDidCatch(error, info) { }
   render() {
     if (!this.state.hasError) return this.props.children;
     return (
@@ -1291,54 +1188,12 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-/* ── NOT FOUND / OFFLINE PAGE ── */
-// eslint-disable-next-line no-unused-vars
-function ErrorPage({type='notfound'}){
-  const msgs = {
-    notfound: {
-      ar:'حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ',
-      arTrans:'Allah is sufficient for us and He is the best disposer of affairs',
-      title:'Page Not Found',
-      body:'The page you are looking for does not exist or may have moved. Please return to the home page.',
-    },
-    offline: {
-      ar:'وَاصْبِرْ فَإِنَّ اللَّهَ لَا يُضِيعُ أَجْرَ الْمُحْسِنِينَ',
-      arTrans:'And be patient — indeed, Allah does not waste the reward of the righteous',
-      title:'You are offline',
-      body:'It looks like your internet connection is unavailable. Please check your connection and try again. Your reading progress is saved locally.',
-    },
-    error: {
-      ar:'إِنَّ مَعَ الْعُسْرِ يُسْرًا',
-      arTrans:'Indeed, with hardship comes ease',
-      title:'Something went wrong',
-      body:'We are aware of the issue and our team is working on it. Alhamdulillah for your patience. Please try again shortly.',
-    }
-  };
-  const m = msgs[type] || msgs.notfound;
-  return(
-    <div style={{minHeight:'100vh',display:'flex',alignItems:'center',justifyContent:'center',padding:32,background:'var(--bg)',flexDirection:'column',textAlign:'center',position:'relative',overflow:'hidden'}}>
-      <div style={{position:'absolute',top:0,left:0,right:0,height:'50vh',background:'radial-gradient(ellipse at 50% -10%,rgba(200,164,90,0.06) 0%,transparent 65%)',pointerEvents:'none'}}/>
-      <div style={{fontFamily:'Amiri,serif',fontSize:30,color:'var(--gold)',lineHeight:1.9,marginBottom:6,letterSpacing:1}}>{m.ar}</div>
-      <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:13,color:'var(--cream3)',marginBottom:44,letterSpacing:1,fontStyle:'italic'}}>{m.arTrans}</div>
-      <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:42,fontWeight:300,color:'var(--cream)',marginBottom:10}}>{m.title}</div>
-      <div style={{fontSize:14,color:'var(--cream3)',lineHeight:1.9,maxWidth:420,marginBottom:8}}>{m.body}</div>
-      <div style={{fontSize:13,color:'var(--gold)',marginBottom:36,opacity:0.7}}>— NurQuran · نور القرآن</div>
-      <button onClick={()=>{window.location.href='/'}} style={{background:'var(--gold)',border:'none',borderRadius:12,padding:'14px 32px',color:'#08100A',fontFamily:"'Cormorant Garamond',serif",fontSize:17,cursor:'pointer',letterSpacing:0.5}}>
-        Return to NurQuran
-      </button>
-    </div>
-  );
-}
-
-
 /* ── FOOTER ── */
 function Footer({setView}){
   return(
     <footer style={{background:'var(--bg2)',borderTop:'0.5px solid var(--border)',padding:'40px 24px 24px',marginTop:'auto'}}>
       <div style={{maxWidth:860,margin:'0 auto'}}>
-        {/* Top row */}
         <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(180px,1fr))',gap:32,marginBottom:36}}>
-          {/* Brand */}
           <div>
             <div style={{fontFamily:'Amiri,serif',fontSize:10,color:'var(--gold)',opacity:0.5,letterSpacing:3,marginBottom:4}}>نور القرآن</div>
             <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:24,color:'var(--gold)',letterSpacing:2,marginBottom:10}}>NurQuran</div>
@@ -1348,7 +1203,6 @@ function Footer({setView}){
               Built as sadaqah jariyah. 🌙
             </div>
           </div>
-          {/* Quick links */}
           <div>
             <div style={{fontSize:11,color:'var(--gold)',letterSpacing:2,marginBottom:14,opacity:0.7}}>EXPLORE</div>
             {[
@@ -1364,7 +1218,6 @@ function Footer({setView}){
               >{l.label}</div>
             ))}
           </div>
-          {/* Info */}
           <div>
             <div style={{fontSize:11,color:'var(--gold)',letterSpacing:2,marginBottom:14,opacity:0.7}}>INFO</div>
             {[
@@ -1377,18 +1230,13 @@ function Footer({setView}){
               >{l.label}</div>
             ))}
           </div>
-          {/* Mission */}
           <div>
             <div style={{fontSize:11,color:'var(--gold)',letterSpacing:2,marginBottom:14,opacity:0.7}}>THE MISSION</div>
             <div style={{fontFamily:'Amiri,serif',fontSize:16,color:'var(--gold)',lineHeight:1.9,marginBottom:8}}>وَذَكِّرْ فَإِنَّ الذِّكْرَىٰ تَنفَعُ الْمُؤْمِنِينَ</div>
             <div style={{fontSize:12,color:'var(--cream3)',lineHeight:1.7,fontStyle:'italic'}}>And remind, for indeed reminding benefits the believers.<br/><span style={{opacity:0.6}}>— Surah Adh-Dhariyat 51:55</span></div>
           </div>
         </div>
-
-        {/* Divider */}
         <div style={{height:'0.5px',background:'var(--border)',marginBottom:20}}/>
-
-        {/* Bottom row */}
         <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:12}}>
           <div style={{fontSize:12,color:'var(--cream3)',lineHeight:1.8}}>
             © 2026 NurQuran · Built with ❤ for every human on earth<br/>
@@ -1412,8 +1260,8 @@ export default function App(){
   const [surah,setSurah]=useState(null);
   const [content,setContent]=useState(null);
   const [loading,setLoading]=useState(false);
-  const [completed,setCompleted]=useState(()=>{try{return JSON.parse(localStorage.getItem('nq_done_'+storedUser)||'{}')}catch{return{}}});
   const storedUser = localStorage.getItem('nq_user')||'';
+  const [completed,setCompleted]=useState(()=>{try{return JSON.parse(localStorage.getItem('nq_done_'+storedUser)||'{}')}catch{return{}}});
   const [pts,setPts]=useState(()=>parseInt(localStorage.getItem('nq_pts_'+storedUser)||'0'));
   const [lastRead,setLastRead]=useState(()=>{try{return JSON.parse(localStorage.getItem('nq_last')||'null')}catch{return null}});
   const [toast,setToast]=useState(null);
@@ -1423,21 +1271,24 @@ export default function App(){
   const [showAdmin,setShowAdmin]=useState(false);
   const [theme,setTheme]=useState(()=>localStorage.getItem('nq_theme')||'dark');
   const presenceRef=useRef(null);
-  const [translationId]=useState('en.sahih'); // eslint-disable-line
+  const [translationId]=useState('en.sahih'); 
 
   useEffect(()=>{
     document.body.className=theme==='dark'?'':theme;
     localStorage.setItem('nq_theme',theme);
   },[theme]);
+
   useEffect(()=>{if(userName)localStorage.setItem('nq_done_'+userName,JSON.stringify(completed));},[completed,userName]);
   useEffect(()=>{if(userName)localStorage.setItem('nq_pts_'+userName,pts);},[pts,userName]);
   useEffect(()=>{if(lastRead)localStorage.setItem('nq_last',JSON.stringify(lastRead));},[lastRead]);
   useEffect(()=>{getEpisodes().then(d=>{setEpisodes(d);setEpLoading(false)});},[]);
+
   useEffect(()=>{
     if(!userName)return;
     const sync=()=>upsertUser(userName,pts,Object.keys(completed).length);
     sync();const t=setInterval(sync,30000);return()=>clearInterval(t);
   },[userName,pts,completed]);
+
   useEffect(()=>{
     if(!userName)return;
     presenceRef.current=subscribeToPresence('nurquran-global',userName,setLiveCount);
@@ -1445,7 +1296,7 @@ export default function App(){
   },[userName]);
 
   const showToast=m=>{setToast(m);setTimeout(()=>setToast(null),2800)};
-  // Offline detection
+
   useEffect(()=>{
     const handleOffline=()=>showToast('⚠ You are offline — Quran text may not load');
     const handleOnline=()=>showToast('✦ Back online — Alhamdulillah');
@@ -1453,7 +1304,6 @@ export default function App(){
     window.addEventListener('online',handleOnline);
     return()=>{window.removeEventListener('offline',handleOffline);window.removeEventListener('online',handleOnline)};
   },[]);
-
 
   const liveEp=episodes[0]||null;
 
@@ -1490,7 +1340,6 @@ export default function App(){
       <Sidebar view={view} setView={setView} pts={pts} userName={userName} theme={theme} setTheme={setTheme} onAdmin={()=>setShowAdmin(true)} completed={completed} onLogout={()=>{localStorage.removeItem('nq_user');localStorage.removeItem('nq_last');setUserName('');setView('home');setCompleted({});setPts(0);setLastRead(null);}}/>
 
       <div className="main-area">
-        {/* Mobile top header */}
         <div className="mobile-header mobile-header-bg" style={{display:'none',position:'sticky',top:0,zIndex:90,background:'rgba(8,16,10,0.96)',backdropFilter:'blur(20px)',borderBottom:'0.5px solid var(--border)',alignItems:'center',justifyContent:'space-between',padding:'0 14px',height:52,flexShrink:0}}>
           <div style={{display:'flex',alignItems:'center',gap:8}}>
             {(view!=='home')&&<button onClick={()=>setView('home')} style={{background:'none',border:'0.5px solid var(--border2)',borderRadius:7,color:'var(--gold)',padding:'5px 10px',cursor:'pointer',fontSize:12}}>← Back</button>}
@@ -1517,7 +1366,6 @@ export default function App(){
           </div>
         </div>
 
-        {/* Footer — only on desktop non-reader pages */}
         {view!=='reader'&&<div style={{display:'none'}} className="desktop-footer"><Footer setView={setView}/></div>}
         <MobileNav view={view} setView={setView}/>
       </div>
