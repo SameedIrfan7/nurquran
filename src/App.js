@@ -89,6 +89,8 @@ body.light .mobile-header-bg{background:rgba(247,242,232,0.96)!important}
 .ayah-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;border:0.5px solid var(--border2);background:var(--gold3);color:var(--gold);font-size:11px;font-family:'Cormorant Garamond',serif;margin:0 3px;vertical-align:middle;cursor:pointer;transition:all 0.2s;flex-shrink:0}
 .ayah-num:hover,.ayah-num.done{background:var(--gold);color:#08100A;border-color:var(--gold)}
 .page-flip-enter{animation:flipIn 0.4s cubic-bezier(0.4,0,0.2,1) both}
+.desktop-footer{display:block!important}
+@media(max-width:900px){.desktop-footer{display:none!important}}
 .ayah-word{cursor:pointer;transition:all 0.15s;border-radius:4px;padding:0 2px;display:inline}
 .ayah-word:hover{background:rgba(200,164,90,0.15)}
 :root{--quran-size:26px}
@@ -132,6 +134,17 @@ const TRANSLATIONS = [
   { id: 'de.aburida', name: 'Deutsch — Abu Rida', lang: 'de' },
   { id: 'tr.ates', name: 'Türkçe — Ateş', lang: 'tr' },
   { id: 'id.indonesian', name: 'Indonesia — Bahasa', lang: 'id' },
+];
+
+const FEATURED_SURAHS = [
+  {n:1,name:"Al-Fatiha",ar:"الفاتحة",meaning:"The Opening",ayahs:7,type:"Meccan"},
+  {n:2,name:"Al-Baqara",ar:"البقرة",meaning:"The Cow",ayahs:286,type:"Medinan"},
+  {n:18,name:"Al-Kahf",ar:"الكهف",meaning:"The Cave",ayahs:110,type:"Meccan"},
+  {n:36,name:"Ya-Sin",ar:"يس",meaning:"Ya Sin",ayahs:83,type:"Meccan"},
+  {n:55,name:"Ar-Rahman",ar:"الرحمان",meaning:"The Beneficent",ayahs:78,type:"Medinan"},
+  {n:67,name:"Al-Mulk",ar:"الملك",meaning:"The Sovereignty",ayahs:30,type:"Meccan"},
+  {n:112,name:"Al-Ikhlas",ar:"الإخلاص",meaning:"The Sincerity",ayahs:4,type:"Meccan"},
+  {n:114,name:"An-Nas",ar:"الناس",meaning:"The Mankind",ayahs:6,type:"Meccan"},
 ];
 
 const ACTIVITY = ['Someone completed Al-Fatiha','A reader from Malaysia joined','New listener from Pakistan','Someone marked 10 ayahs in Ya-Sin','A reader finished Al-Ikhlas','Someone from Indonesia just joined','A reader completed their daily recitation','New reader from Bangladesh joined'];
@@ -463,8 +476,6 @@ function MobileNav({view,setView}){
 function HomeView({userName,pts,completed,setView,openSurah,lastRead,liveEpisode,liveCount}){
   const totalRead=Object.keys(completed).length;
   const pct=Math.round(totalRead/6236*100);
-  const [search,setSearch]=useState('');
-  const filtered=search?SURAHS.filter(s=>s.name.toLowerCase().includes(search.toLowerCase())||s.ar.includes(search)||s.meaning.toLowerCase().includes(search.toLowerCase())||String(s.n).includes(search)):SURAHS;
   const live=isEpisodeLive(liveEpisode);
 
   return(
@@ -555,32 +566,71 @@ function HomeView({userName,pts,completed,setView,openSurah,lastRead,liveEpisode
 
       <GoldLine/>
 
-      {/* Search + surah list */}
-      <div style={{padding:'10px 16px 8px'}}>
-        <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search surah by name, number or meaning..." style={{width:'100%',background:'var(--bg3)',border:'0.5px solid var(--border)',borderRadius:10,padding:'12px 16px',color:'var(--cream)',fontSize:14,outline:'none',fontFamily:"'DM Sans',sans-serif"}}/>
-      </div>
-      <div style={{padding:'0 8px'}}>
+
+      {/* Featured Surahs — 8 most read */}
+      <div style={{padding:'0 16px 20px'}}>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:14}}>
+          <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:11,color:'var(--gold)',letterSpacing:2,opacity:0.7}}>FEATURED SURAHS</div>
+          <button onClick={()=>setView('search')} style={{fontFamily:"'Cormorant Garamond',serif",fontSize:14,color:'var(--gold)',background:'var(--gold3)',border:'0.5px solid var(--border2)',borderRadius:20,padding:'4px 14px',cursor:'pointer'}}>
+            View All 114 →
+          </button>
+        </div>
         <div className="surah-grid">
-          {filtered.map((s,i)=>{
+          {FEATURED_SURAHS.map((s,i)=>{
             const done=Array.from({length:s.ayahs},(_,j)=>completed[s.n+':'+(j+1)]).filter(Boolean).length;
             const p=Math.round(done/s.ayahs*100);
             return(
-              <div key={s.n} className="row-hover" onClick={()=>openSurah(s)} style={{display:'flex',alignItems:'center',padding:'12px 14px',borderRadius:10,border:'0.5px solid var(--border)',cursor:'pointer',background:'var(--bg2)',animation:`fadeUp 0.3s ${Math.min(i,20)*0.02}s both`,transition:'all 0.2s',boxShadow:'0 2px 12px rgba(0,0,0,0.2)'}}>
-                <div style={{width:36,height:36,borderRadius:9,background:p>0?'var(--gold3)':'var(--bg4)',border:'0.5px solid '+(p>0?'var(--border2)':'var(--border)'),display:'flex',alignItems:'center',justifyContent:'center',fontFamily:"'Cormorant Garamond',serif",fontSize:13,color:p>0?'var(--gold)':'var(--cream3)',flexShrink:0,marginRight:12}}>{s.n}</div>
+              <div key={s.n} className="row-hover" onClick={()=>openSurah(s)} style={{display:'flex',alignItems:'center',padding:'12px 14px',borderRadius:10,border:'0.5px solid var(--border)',cursor:'pointer',background:'var(--bg2)',animation:`fadeUp 0.3s ${i*0.05}s both`,transition:'all 0.2s',boxShadow:'0 2px 12px rgba(0,0,0,0.15)'}}>
+                <div style={{width:38,height:38,borderRadius:10,background:p>0?'var(--gold3)':'var(--bg3)',border:'0.5px solid '+(p>0?'var(--border2)':'var(--border)'),display:'flex',alignItems:'center',justifyContent:'center',fontFamily:"'Cormorant Garamond',serif",fontSize:13,color:p>0?'var(--gold)':'var(--cream3)',flexShrink:0,marginRight:12}}>{s.n}</div>
                 <div style={{flex:1,minWidth:0}}>
                   <div style={{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:2}}>
                     <span style={{fontFamily:"'Cormorant Garamond',serif",fontSize:16,color:'var(--cream)'}}>{s.name}</span>
                     <span style={{fontFamily:'Amiri,serif',fontSize:18,color:'var(--gold)',opacity:0.85,flexShrink:0,marginLeft:8}}>{s.ar}</span>
                   </div>
                   <div style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-                    <span style={{fontSize:11,color:'var(--cream3)'}}>{s.meaning} · {s.ayahs} ayahs · {s.type}</span>
+                    <span style={{fontSize:11,color:'var(--cream3)'}}>{s.meaning} · {s.ayahs} ayahs</span>
                     {p>0&&<span style={{fontSize:11,color:'var(--gold)',flexShrink:0}}>{p}%</span>}
                   </div>
-                  {p>0&&<div style={{height:1.5,background:'var(--bg4)',borderRadius:2,marginTop:4}}><div style={{height:1.5,width:p+'%',background:'var(--gold)',opacity:0.5,borderRadius:2}}/></div>}
+                  {p>0&&<div style={{height:2,background:'var(--bg4)',borderRadius:2,marginTop:5}}><div style={{height:2,width:p+'%',background:'var(--gold)',opacity:0.6,borderRadius:2}}/></div>}
                 </div>
               </div>
             );
           })}
+        </div>
+        {/* View all button bottom */}
+        <div style={{textAlign:'center',marginTop:16}}>
+          <button onClick={()=>setView('search')} style={{fontFamily:"'Cormorant Garamond',serif",fontSize:16,color:'var(--cream)',background:'var(--bg3)',border:'0.5px solid var(--border2)',borderRadius:12,padding:'12px 32px',cursor:'pointer',transition:'all 0.2s',display:'inline-flex',alignItems:'center',gap:8}}>
+            <span>Explore All 114 Surahs</span><span style={{color:'var(--gold)'}}>→</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Daily Reminder / News section */}
+      <GoldLine/>
+      <div style={{padding:'16px 16px 20px'}}>
+        <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:11,color:'var(--gold)',letterSpacing:2,opacity:0.7,marginBottom:14}}>DAILY REMINDER</div>
+        <div style={{background:'var(--bg2)',border:'0.5px solid var(--border)',borderRadius:16,overflow:'hidden'}}>
+          {/* Today verse */}
+          <div style={{padding:'20px 22px',borderBottom:'0.5px solid var(--border)',background:'radial-gradient(ellipse at right,rgba(200,164,90,0.04) 0%,transparent 70%)'}}>
+            <div style={{fontSize:10,color:'var(--gold)',letterSpacing:2,marginBottom:10,opacity:0.7}}>VERSE OF THE DAY</div>
+            <div style={{fontFamily:'Amiri,serif',fontSize:24,color:'var(--cream)',direction:'rtl',textAlign:'right',lineHeight:2,marginBottom:12}}>وَلَذِكْرُ اللَّهِ أَكْبَرُ</div>
+            <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:16,fontStyle:'italic',color:'var(--cream2)',marginBottom:6}}>And the remembrance of Allah is greater.</div>
+            <div style={{fontSize:11,color:'var(--cream3)',opacity:0.7}}>— Surah Al-Ankabut 29:45</div>
+          </div>
+          {/* Updates */}
+          {[
+            {icon:'🌙',title:'Recitations begin March 25, 2026',desc:'Day 1 of 365 — Al-Fatiha. Subscribe to get notified when it goes live.'},
+            {icon:'🔐',title:'Unique accounts — coming soon',desc:'Your identity and progress will be fully secured in the next update.'},
+            {icon:'💛',title:'Donations & Sadaqah — coming soon',desc:'A transparent system to support this work. Every contribution will be announced publicly.'},
+          ].map((u,i)=>(
+            <div key={i} style={{display:'flex',gap:14,padding:'14px 22px',borderBottom:i<2?'0.5px solid var(--border)':'none',alignItems:'flex-start'}}>
+              <span style={{fontSize:18,flexShrink:0,marginTop:2}}>{u.icon}</span>
+              <div>
+                <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:16,color:'var(--cream)',marginBottom:4}}>{u.title}</div>
+                <div style={{fontSize:12,color:'var(--cream3)',lineHeight:1.7}}>{u.desc}</div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -1280,6 +1330,81 @@ function ErrorPage({type='notfound'}){
   );
 }
 
+
+/* ── FOOTER ── */
+function Footer({setView}){
+  return(
+    <footer style={{background:'var(--bg2)',borderTop:'0.5px solid var(--border)',padding:'40px 24px 24px',marginTop:'auto'}}>
+      <div style={{maxWidth:860,margin:'0 auto'}}>
+        {/* Top row */}
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(180px,1fr))',gap:32,marginBottom:36}}>
+          {/* Brand */}
+          <div>
+            <div style={{fontFamily:'Amiri,serif',fontSize:10,color:'var(--gold)',opacity:0.5,letterSpacing:3,marginBottom:4}}>نور القرآن</div>
+            <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:24,color:'var(--gold)',letterSpacing:2,marginBottom:10}}>NurQuran</div>
+            <div style={{fontSize:12,color:'var(--cream3)',lineHeight:1.9}}>
+              Free for every human on earth.<br/>
+              No ads. No subscriptions.<br/>
+              Built as sadaqah jariyah. 🌙
+            </div>
+          </div>
+          {/* Quick links */}
+          <div>
+            <div style={{fontSize:11,color:'var(--gold)',letterSpacing:2,marginBottom:14,opacity:0.7}}>EXPLORE</div>
+            {[
+              {label:'Read Quran',v:'search'},
+              {label:'Daily Recitations',v:'recitations'},
+              {label:'Scholars & Bayans',v:'scholars'},
+              {label:'Leaderboard',v:'leaderboard'},
+              {label:'My Profile',v:'profile'},
+            ].map(l=>(
+              <div key={l.v} onClick={()=>setView(l.v)} style={{fontFamily:"'Cormorant Garamond',serif",fontSize:15,color:'var(--cream3)',cursor:'pointer',marginBottom:8,transition:'color 0.15s'}}
+                onMouseEnter={e=>e.target.style.color='var(--gold)'}
+                onMouseLeave={e=>e.target.style.color='var(--cream3)'}
+              >{l.label}</div>
+            ))}
+          </div>
+          {/* Info */}
+          <div>
+            <div style={{fontSize:11,color:'var(--gold)',letterSpacing:2,marginBottom:14,opacity:0.7}}>INFO</div>
+            {[
+              {label:'About Us',v:'about'},
+              {label:'Privacy Policy',v:'privacy'},
+            ].map(l=>(
+              <div key={l.v} onClick={()=>setView(l.v)} style={{fontFamily:"'Cormorant Garamond',serif",fontSize:15,color:'var(--cream3)',cursor:'pointer',marginBottom:8,transition:'color 0.15s'}}
+                onMouseEnter={e=>e.target.style.color='var(--gold)'}
+                onMouseLeave={e=>e.target.style.color='var(--cream3)'}
+              >{l.label}</div>
+            ))}
+          </div>
+          {/* Mission */}
+          <div>
+            <div style={{fontSize:11,color:'var(--gold)',letterSpacing:2,marginBottom:14,opacity:0.7}}>THE MISSION</div>
+            <div style={{fontFamily:'Amiri,serif',fontSize:16,color:'var(--gold)',lineHeight:1.9,marginBottom:8}}>وَذَكِّرْ فَإِنَّ الذِّكْرَىٰ تَنفَعُ الْمُؤْمِنِينَ</div>
+            <div style={{fontSize:12,color:'var(--cream3)',lineHeight:1.7,fontStyle:'italic'}}>And remind, for indeed reminding benefits the believers.<br/><span style={{opacity:0.6}}>— Surah Adh-Dhariyat 51:55</span></div>
+          </div>
+        </div>
+
+        {/* Divider */}
+        <div style={{height:'0.5px',background:'var(--border)',marginBottom:20}}/>
+
+        {/* Bottom row */}
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:12}}>
+          <div style={{fontSize:12,color:'var(--cream3)',lineHeight:1.8}}>
+            © 2026 NurQuran · Built with ❤ for every human on earth<br/>
+            <span style={{opacity:0.6}}>Recitations begin March 25, 2026 · Journey to Ramadan 2027</span>
+          </div>
+          <div style={{display:'flex',gap:10,flexWrap:'wrap'}}>
+            <div style={{fontSize:11,color:'var(--cream3)',background:'var(--bg3)',border:'0.5px solid var(--border)',borderRadius:20,padding:'5px 14px'}}>🕌 114 Surahs</div>
+            <div style={{fontSize:11,color:'var(--cream3)',background:'var(--bg3)',border:'0.5px solid var(--border)',borderRadius:20,padding:'5px 14px'}}>📖 6,236 Ayahs</div>
+            <div style={{fontSize:11,color:'var(--cream3)',background:'var(--bg3)',border:'0.5px solid var(--border)',borderRadius:20,padding:'5px 14px'}}>🌍 Free Forever</div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
 /* ── MAIN APP ── */
 export default function App(){
   const [userName,setUserName]=useState(()=>localStorage.getItem('nq_user')||'');
@@ -1392,6 +1517,8 @@ export default function App(){
           </div>
         </div>
 
+        {/* Footer — only on desktop non-reader pages */}
+        {view!=='reader'&&<div style={{display:'none'}} className="desktop-footer"><Footer setView={setView}/></div>}
         <MobileNav view={view} setView={setView}/>
       </div>
     </div>
