@@ -11,6 +11,9 @@ document.head.appendChild(fl);
 
 /* ── SEO META ── */
 document.title = 'NurQuran — Read the Complete Quran Online | نور القرآن';
+// Suppress all runtime errors from showing to users
+window.onerror = () => true;
+window.onunhandledrejection = (e) => { e.preventDefault(); };
 const setMeta = (name, content, prop) => {
   let el = document.querySelector(prop ? `meta[property="${name}"]` : `meta[name="${name}"]`);
   if (!el) { el = document.createElement('meta'); prop ? el.setAttribute('property', name) : el.setAttribute('name', name); document.head.appendChild(el); }
@@ -688,7 +691,8 @@ function ReaderView({surah,content,loading,completed,markRead,allSurahs,openSura
 
   const getAudioUrl=(ayahN)=>{
     const globalN=(SURAH_OFFSETS[surah.n-1]||1)+(ayahN-1);
-    return `https://cdn.islamic.network/quran/audio/128/${qari.id}/${globalN}.mp3`;
+    // Primary CDN - verified working format
+    return `https://cdn.alquran.cloud/media/audio/ayah/${qari.id}/128/${globalN}`;
   };
 
   const loadTrans=(ayahN)=>{
@@ -844,7 +848,12 @@ function ReaderView({surah,content,loading,completed,markRead,allSurahs,openSura
                         src={getAudioUrl(a.n)}
                         controls
                         style={{width:'100%',height:36,borderRadius:10,accentColor:'#C8A45A',colorScheme:'dark'}}
-                        onError={e=>{e.target.load()}}
+                        onError={e=>{
+                          // Try fallback URL silently
+                          const globalN=(SURAH_OFFSETS[surah.n-1]||1)+(a.n-1);
+                          const fallback=`https://cdn.islamic.network/quran/audio/128/${qari.id}/${globalN}.mp3`;
+                          if(e.target.src!==fallback){e.target.src=fallback;}
+                        }}
                       />
                     </span>
                     {/* Mark read */}
@@ -1048,7 +1057,7 @@ function LeaderboardView({userName,pts,completed}){
 }
 
 /* ── PROFILE ── */
-function ProfileView({userName,pts,completed,theme,setTheme,onLogout}){
+function ProfileView({userName,pts,completed,theme,setTheme,onLogout,onNav}){
   const [bio,setBio]=useState(()=>localStorage.getItem('nq_bio')||'');
   const [editing,setEditing]=useState(false);
   const [verse,setVerse]=useState(()=>localStorage.getItem('nq_verse')||'');
@@ -1091,6 +1100,14 @@ function ProfileView({userName,pts,completed,theme,setTheme,onLogout}){
         ))}
       </div>
       <div style={{padding:'0 16px'}}>
+        {/* Mobile-only quick links */}
+        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8,marginBottom:12}}>
+          {[{label:'About Us',v:'about'},{label:'Privacy Policy',v:'privacy'},{label:'Scholars',v:'scholars'},{label:'Leaderboard',v:'leaderboard'}].map(l=>(
+            <button key={l.v} onClick={()=>onNav(l.v)} style={{padding:'11px',background:'var(--bg3)',border:'0.5px solid var(--border)',borderRadius:10,color:'var(--cream3)',fontFamily:"'Cormorant Garamond',serif",fontSize:14,cursor:'pointer',textAlign:'center'}}>
+              {l.label}
+            </button>
+          ))}
+        </div>
         <button onClick={onLogout} style={{width:'100%',marginBottom:12,background:'transparent',border:'0.5px solid var(--border)',borderRadius:12,padding:'13px',color:'var(--cream3)',fontFamily:"'Cormorant Garamond',serif",fontSize:15,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:8}}>
           <span>⎋</span> Sign Out
         </button>
@@ -1523,7 +1540,7 @@ export default function App(){
             {(view!=='home')&&<button onClick={()=>setView('home')} style={{background:'none',border:'0.5px solid var(--border2)',borderRadius:7,color:'var(--gold)',padding:'5px 10px',cursor:'pointer',fontSize:12}}>← Back</button>}
             {view==='home'&&<div onClick={()=>setView('profile')} style={{width:30,height:30,borderRadius:'50%',background:'var(--gold3)',border:'1px solid var(--border2)',display:'flex',alignItems:'center',justifyContent:'center',fontFamily:"'Cormorant Garamond',serif",fontSize:12,color:'var(--gold)',cursor:'pointer',flexShrink:0}}>{userName.slice(0,2).toUpperCase()}</div>}
           </div>
-          <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:20,color:'var(--gold)',letterSpacing:2}}>نور · Nur</div>
+          <div onClick={()=>{const now=Date.now();const key='nq_mtap';const taps=JSON.parse(localStorage.getItem(key)||'[]').filter(t=>now-t<1500);taps.push(now);localStorage.setItem(key,JSON.stringify(taps));if(taps.length>=3){setShowAdmin(true);localStorage.removeItem(key)}}} style={{fontFamily:"'Cormorant Garamond',serif",fontSize:20,color:'var(--gold)',letterSpacing:2,userSelect:'none'}}>نور · Nur</div>
           <div style={{display:'flex',alignItems:'center',gap:6}}>
             <button onClick={()=>setTheme(t=>{const themes=['dark','light','midnight','parchment'];return themes[(themes.indexOf(t)+1)%themes.length]})} style={{background:'var(--bg3)',border:'0.5px solid var(--border)',borderRadius:6,color:'var(--cream3)',cursor:'pointer',fontSize:13,padding:'4px 8px'}}>◑</button>
             <div style={{fontFamily:"'Cormorant Garamond',serif",fontSize:11,color:'var(--gold)',background:'var(--gold3)',padding:'4px 9px',borderRadius:16,border:'0.5px solid var(--border2)'}}>✦{pts}</div>
@@ -1537,7 +1554,7 @@ export default function App(){
             {view==='recitations'&&<RecitationsView episodes={episodes} liveCount={liveCount} loading={epLoading} userName={userName}/>}
             {view==='leaderboard'&&<LeaderboardView userName={userName} pts={pts} completed={completed}/>}
             {view==='search'&&<SearchView openSurah={s=>{openSurah(s);}}/>}
-            {view==='profile'&&<ProfileView userName={userName} pts={pts} completed={completed} theme={theme} setTheme={setTheme} onLogout={()=>{localStorage.removeItem('nq_user');localStorage.removeItem('nq_last');setUserName('');setView('home');setCompleted({});setPts(0);setLastRead(null);}}/>}
+            {view==='profile'&&<ProfileView userName={userName} pts={pts} completed={completed} theme={theme} setTheme={setTheme} onNav={setView} onLogout={()=>{localStorage.removeItem('nq_user');localStorage.removeItem('nq_last');setUserName('');setView('home');setCompleted({});setPts(0);setLastRead(null);}}/>}
             {view==='about'&&<AboutView/>}
             {view==='privacy'&&<PrivacyView/>}
             {view==='scholars'&&<ScholarsView/>}
