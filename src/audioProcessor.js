@@ -1,298 +1,316 @@
 /**
- * NurQuran Audio Processor v2
- * Aggressive noise removal pipeline for voice recitation
+ * NurQuran Audio Processor v3
+ * Uses Web Audio API for real-time processing
+ * Works directly in browser — no external libraries needed
  */
 
 export async function processAudio(rawBlob, onProgress) {
   onProgress?.('Reading audio...');
   const arrayBuffer = await rawBlob.arrayBuffer();
+
+  onProgress?.('Setting up audio context...');
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 44100 });
 
-  onProgress?.('Decoding...');
-  const audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+  onProgress?.('Decoding audio...');
+  let audioBuffer;
+  try {
+    audioBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+  } catch(e) {
+    if(audioCtx.state !== 'closed') audioCtx.close();
+    throw new Error('Could not decode audio. Try recording again.');
+  }
 
-  onProgress?.('Removing background noise...');
-  const processed = await applyProcessingChain(audioCtx, audioBuffer, onProgress);
+  onProgress?.('Converting to mono...');
+  const mono = toMono(audioBuffer);
 
+  onProgress?.('Analysing noise floor...');
+  const noiseProfile = estimateNoise(mono);
+
+  onProgress?.('Applying noise reduction...');
+  const denoised = applyNoiseReduction(mono, noiseProfile);
+
+  onProgress?.('Applying EQ filters...');
+  const filtered = await applyFilters(audioCtx, denoised, onProgress);
+
+  onProgress?.('Applying noise gate...');
+  const gated = applyNoiseGate(filtered, noiseProfile.rms * 3);
+
+  onProgress?.('Normalising volume...');
+  const normalised = normalise(gated, 0.88);
+
+  if(audioCtx.state !== 'closed') audioCtx.close();
   onProgress?.('Encoding...');
-  const outputBlob = await encodeToWav(processed);
-
-  if (audioCtx.state !== 'closed') audioCtx.close();
-  onProgress?.('Done');
-  return outputBlob;
+  const blob = encodeWav(normalised);
+  onProgress?.('Done ✓');
+  return blob;
 }
 
-async function applyProcessingChain(audioCtx, inputBuffer, onProgress) {
-  // Step 1: Convert to mono
-  const mono = toMono(inputBuffer);
-
-  // Step 2: Spectral noise reduction (estimate noise floor from first 0.5s)
-  onProgress?.('Estimating noise profile...');
-  const denoised = spectralSubtraction(mono);
-
-  // Step 3: Offline processing chain
-  const offlineCtx = new OfflineAudioContext(1, denoised.length, denoised.sampleRate);
-
-  const source = offlineCtx.createBufferSource();
-  source.buffer = denoised;
-
-  // High-pass 100Hz — kill room rumble and handling noise
-  const hp1 = offlineCtx.createBiquadFilter();
-  hp1.type = 'highpass'; hp1.frequency.value = 100; hp1.Q.value = 0.9;
-
-  // High-pass 150Hz second stage — extra rumble kill
-  const hp2 = offlineCtx.createBiquadFilter();
-  hp2.type = 'highpass'; hp2.frequency.value = 150; hp2.Q.value = 0.7;
-
-  // Low-pass 7500Hz — remove hiss and high freq noise
-  const lp = offlineCtx.createBiquadFilter();
-  lp.type = 'lowpass'; lp.frequency.value = 7500; lp.Q.value = 0.8;
-
-  // Notch at 50Hz — kill AC hum (India uses 50Hz)
-  const notch = offlineCtx.createBiquadFilter();
-  notch.type = 'notch'; notch.frequency.value = 50; notch.Q.value = 10;
-
-  // Notch at 100Hz harmonic
-  const notch2 = offlineCtx.createBiquadFilter();
-  notch2.type = 'notch'; notch2.frequency.value = 100; notch2.Q.value = 8;
-
-  // Presence boost 2-4kHz — voice clarity and intelligibility
-  const presence = offlineCtx.createBiquadFilter();
-  presence.type = 'peaking'; presence.frequency.value = 2800;
-  presence.gain.value = 4; presence.Q.value = 0.8;
-
-  // Compressor — even out loud/quiet parts
-  const comp = offlineCtx.createDynamicsCompressor();
-  comp.threshold.value = -20;
-  comp.knee.value = 8;
-  comp.ratio.value = 5;
-  comp.attack.value = 0.002;
-  comp.release.value = 0.2;
-
-  // Makeup gain
-  const gain = offlineCtx.createGain();
-  gain.gain.value = 1.6;
-
-  source.connect(notch);
-  notch.connect(notch2);
-  notch2.connect(hp1);
-  hp1.connect(hp2);
-  hp2.connect(lp);
-  lp.connect(presence);
-  presence.connect(comp);
-  comp.connect(gain);
-  gain.connect(offlineCtx.destination);
-  source.start(0);
-
-  onProgress?.('Applying filters...');
-  const rendered = await offlineCtx.startRendering();
-
-  // Step 4: Aggressive noise gate
-  onProgress?.('Gating background voices...');
-  const gated = aggressiveNoiseGate(rendered);
-
-  // Step 5: Normalize
-  onProgress?.('Normalizing...');
-  return normalize(gated, 0.90);
+/* ── MONO CONVERSION ── */
+function toMono(buf) {
+  if(buf.numberOfChannels === 1) return buf;
+  const out = new AudioBuffer({ numberOfChannels:1, length:buf.length, sampleRate:buf.sampleRate });
+  const outData = out.getChannelData(0);
+  for(let ch = 0; ch < buf.numberOfChannels; ch++) {
+    const d = buf.getChannelData(ch);
+    for(let i = 0; i < d.length; i++) outData[i] += d[i];
+  }
+  for(let i = 0; i < outData.length; i++) outData[i] /= buf.numberOfChannels;
+  return out;
 }
 
-// Spectral subtraction — estimates noise from first 500ms, subtracts from whole signal
-function spectralSubtraction(buffer) {
-  const data = buffer.getChannelData(0);
-  const sampleRate = buffer.sampleRate;
-  const fftSize = 2048;
-  const hopSize = fftSize / 4;
-  const noiseEstimateSamples = Math.min(Math.floor(0.5 * sampleRate), data.length / 4);
+/* ── NOISE FLOOR ESTIMATION ──
+   Samples the quieter parts of the recording to estimate background noise */
+function estimateNoise(buf) {
+  const data = buf.getChannelData(0);
+  const sr = buf.sampleRate;
+  const blockSize = Math.floor(0.05 * sr); // 50ms blocks
+  const blocks = [];
 
-  // Estimate noise power from first 500ms
-  const noisePower = new Float32Array(fftSize / 2);
-  let noiseFrames = 0;
-  for (let i = 0; i + fftSize < noiseEstimateSamples; i += hopSize) {
-    const frame = data.slice(i, i + fftSize);
-    const mag = simpleDFTMagnitude(frame);
-    for (let k = 0; k < mag.length; k++) noisePower[k] += mag[k] * mag[k];
-    noiseFrames++;
-  }
-  if (noiseFrames > 0) {
-    for (let k = 0; k < noisePower.length; k++) noisePower[k] = Math.sqrt(noisePower[k] / noiseFrames);
-  }
-
-  // Subtract noise from signal — simple wiener-like filter
-  const output = new Float32Array(data.length);
-  for (let i = 0; i + fftSize < data.length; i += hopSize) {
-    const frame = data.slice(i, i + fftSize);
-    const mag = simpleDFTMagnitude(frame);
-    // Apply suppression: reduce bins where signal is close to noise floor
-    const alpha = 2.0; // oversubtraction factor
-    const beta = 0.02; // spectral floor
-    const suppression = new Float32Array(mag.length);
-    for (let k = 0; k < mag.length; k++) {
-      const ratio = Math.max(beta, 1 - alpha * (noisePower[k] / Math.max(mag[k], 1e-10)));
-      suppression[k] = ratio;
-    }
-    // Apply suppression to time domain (simple gain reduction)
-    const frameRms = rms(frame);
-    const noiseRms = rms(Array.from(noisePower));
-    const snr = frameRms / Math.max(noiseRms, 1e-10);
-    const frameGain = Math.min(1, Math.max(0, (snr - 1) / 3));
-    const end = Math.min(i + fftSize, data.length);
-    for (let j = i; j < end; j++) output[j] += data[j] * frameGain * (1 / (fftSize / hopSize));
-  }
-
-  const outBuf = new AudioBuffer({ numberOfChannels: 1, length: buffer.length, sampleRate: buffer.sampleRate });
-  outBuf.getChannelData(0).set(output);
-  return outBuf;
-}
-
-function simpleDFTMagnitude(frame) {
-  const N = frame.length;
-  const half = N / 2;
-  const mag = new Float32Array(half);
-  // Approximate using energy in blocks (fast substitute for full DFT)
-  const blockSize = N / half;
-  for (let k = 0; k < half; k++) {
+  for(let i = 0; i + blockSize < data.length; i += blockSize) {
     let sum = 0;
-    const start = Math.floor(k * blockSize);
-    const end = Math.floor((k + 1) * blockSize);
-    for (let i = start; i < end && i < N; i++) sum += frame[i] * frame[i];
-    mag[k] = Math.sqrt(sum / blockSize);
+    for(let j = i; j < i + blockSize; j++) sum += data[j] * data[j];
+    blocks.push({ rms: Math.sqrt(sum / blockSize), start: i });
   }
-  return mag;
+
+  // Sort by RMS, take bottom 20% as noise estimate
+  const sorted = [...blocks].sort((a,b) => a.rms - b.rms);
+  const noiseBlocks = sorted.slice(0, Math.max(5, Math.floor(sorted.length * 0.2)));
+  const noiseRms = noiseBlocks.reduce((s,b) => s + b.rms, 0) / noiseBlocks.length;
+
+  // Build noise spectrum from quiet blocks
+  const noiseSpectrum = new Float32Array(blockSize);
+  noiseBlocks.forEach(b => {
+    for(let i = 0; i < blockSize; i++) noiseSpectrum[i] += Math.abs(data[b.start + i]);
+  });
+  for(let i = 0; i < noiseSpectrum.length; i++) noiseSpectrum[i] /= noiseBlocks.length;
+
+  return { rms: noiseRms, spectrum: noiseSpectrum, blockSize };
 }
 
-function rms(arr) {
-  let sum = 0;
-  for (let i = 0; i < arr.length; i++) sum += arr[i] * arr[i];
-  return Math.sqrt(sum / arr.length);
-}
-
-// Aggressive noise gate with lookahead and smooth fade
-function aggressiveNoiseGate(buffer) {
-  const data = buffer.getChannelData(0);
-  const sr = buffer.sampleRate;
+/* ── SPECTRAL SUBTRACTION NOISE REDUCTION ── */
+function applyNoiseReduction(buf, noiseProfile) {
+  const data = buf.getChannelData(0);
+  const { blockSize, spectrum, rms } = noiseProfile;
   const out = new Float32Array(data.length);
-  const windowMs = 30; // 30ms analysis window
-  const windowSamples = Math.floor(windowMs * sr / 1000);
-  const holdSamples = Math.floor(0.25 * sr); // 250ms hold
-  const attackSamples = Math.floor(0.005 * sr); // 5ms attack
-  const releaseSamples = Math.floor(0.08 * sr); // 80ms release
+  const overSub = 2.5; // oversubtraction factor — higher = more aggressive
+  const floor = 0.01;  // spectral floor to avoid musical noise
 
-  // Compute dynamic threshold based on signal statistics
-  let maxRms = 0;
-  for (let i = 0; i < data.length - windowSamples; i += windowSamples) {
-    const r = rms(Array.from(data.slice(i, i + windowSamples)));
-    if (r > maxRms) maxRms = r;
+  for(let i = 0; i < data.length; i += blockSize) {
+    const end = Math.min(i + blockSize, data.length);
+    const frameLen = end - i;
+
+    // Calculate frame energy
+    let frameEnergy = 0;
+    for(let j = i; j < end; j++) frameEnergy += data[j] * data[j];
+    const frameRms = Math.sqrt(frameEnergy / frameLen);
+
+    // SNR-based gain
+    const snr = frameRms / Math.max(rms, 1e-10);
+
+    // Wiener-like gain function
+    const gain = Math.max(floor, Math.min(1, 1 - overSub * (1 / Math.max(snr, 0.5))));
+
+    // Apply per-sample with the spectrum shape
+    for(let j = i; j < end; j++) {
+      const specIdx = (j - i) % spectrum.length;
+      const specGain = spectrum[specIdx] > 0 ?
+        Math.max(floor, 1 - overSub * (spectrum[specIdx] / Math.max(Math.abs(data[j]), 1e-10))) : 1;
+      out[j] = data[j] * gain * Math.min(1, specGain + 0.3);
+    }
   }
-  const threshold = maxRms * 0.08; // gate below 8% of peak RMS
+
+  const result = new AudioBuffer({ numberOfChannels:1, length:buf.length, sampleRate:buf.sampleRate });
+  result.getChannelData(0).set(out);
+  return result;
+}
+
+/* ── OFFLINE FILTER CHAIN ── */
+async function applyFilters(audioCtx, inputBuf, onProgress) {
+  const offCtx = new OfflineAudioContext(1, inputBuf.length, inputBuf.sampleRate);
+  const src = offCtx.createBufferSource();
+  src.buffer = inputBuf;
+
+  // 1. High pass 80Hz — kill room rumble
+  const hp1 = offCtx.createBiquadFilter();
+  hp1.type = 'highpass'; hp1.frequency.value = 80; hp1.Q.value = 0.7;
+
+  // 2. Notch 50Hz — Indian AC hum
+  const notch50 = offCtx.createBiquadFilter();
+  notch50.type = 'notch'; notch50.frequency.value = 50; notch50.Q.value = 15;
+
+  // 3. Notch 100Hz — 2nd harmonic of AC hum
+  const notch100 = offCtx.createBiquadFilter();
+  notch100.type = 'notch'; notch100.frequency.value = 100; notch100.Q.value = 10;
+
+  // 4. Notch 150Hz — 3rd harmonic
+  const notch150 = offCtx.createBiquadFilter();
+  notch150.type = 'notch'; notch150.frequency.value = 150; notch150.Q.value = 8;
+
+  // 5. Low shelf boost 200-400Hz — body of voice
+  const warmth = offCtx.createBiquadFilter();
+  warmth.type = 'lowshelf'; warmth.frequency.value = 300; warmth.gain.value = 2;
+
+  // 6. High pass 120Hz — extra rumble cut
+  const hp2 = offCtx.createBiquadFilter();
+  hp2.type = 'highpass'; hp2.frequency.value = 120; hp2.Q.value = 0.5;
+
+  // 7. Low pass 8000Hz — kill hiss
+  const lp = offCtx.createBiquadFilter();
+  lp.type = 'lowpass'; lp.frequency.value = 8000; lp.Q.value = 0.7;
+
+  // 8. Presence boost 2.5kHz — voice clarity
+  const presence = offCtx.createBiquadFilter();
+  presence.type = 'peaking'; presence.frequency.value = 2500;
+  presence.gain.value = 5; presence.Q.value = 0.9;
+
+  // 9. De-harsh 5kHz — reduce sibilance
+  const deHarsh = offCtx.createBiquadFilter();
+  deHarsh.type = 'peaking'; deHarsh.frequency.value = 5000;
+  deHarsh.gain.value = -3; deHarsh.Q.value = 1;
+
+  // 10. Compressor
+  const comp = offCtx.createDynamicsCompressor();
+  comp.threshold.value = -18;
+  comp.knee.value = 6;
+  comp.ratio.value = 6;
+  comp.attack.value = 0.003;
+  comp.release.value = 0.15;
+
+  // 11. Makeup gain
+  const gain = offCtx.createGain();
+  gain.gain.value = 1.8;
+
+  src.connect(hp1);
+  hp1.connect(notch50);
+  notch50.connect(notch100);
+  notch100.connect(notch150);
+  notch150.connect(hp2);
+  hp2.connect(lp);
+  lp.connect(warmth);
+  warmth.connect(presence);
+  presence.connect(deHarsh);
+  deHarsh.connect(comp);
+  comp.connect(gain);
+  gain.connect(offCtx.destination);
+
+  src.start(0);
+  onProgress?.('Processing EQ chain...');
+  return await offCtx.startRendering();
+}
+
+/* ── NOISE GATE ── */
+function applyNoiseGate(buf, threshold) {
+  const data = buf.getChannelData(0);
+  const sr = buf.sampleRate;
+  const out = new Float32Array(data.length);
+  const windowSamples = Math.floor(0.025 * sr); // 25ms window
+  const holdSamples = Math.floor(0.3 * sr); // 300ms hold
+  const attackSamples = Math.floor(0.008 * sr);
+  const releaseSamples = Math.floor(0.1 * sr);
 
   let gateGain = 0;
-  let holdCounter = 0;
-  let state = 'closed'; // 'open', 'closed', 'attack', 'release'
+  let holdCount = 0;
+  let gateOpen = false;
 
-  for (let i = 0; i < data.length; i += windowSamples) {
+  for(let i = 0; i < data.length; i += windowSamples) {
     const end = Math.min(i + windowSamples, data.length);
-    const frameRms = rms(Array.from(data.slice(i, end)));
+    let sum = 0;
+    for(let j = i; j < end; j++) sum += data[j] * data[j];
+    const rms = Math.sqrt(sum / (end - i));
 
-    if (frameRms > threshold) {
-      state = 'open';
-      holdCounter = holdSamples;
-    } else if (holdCounter > 0) {
-      holdCounter -= windowSamples;
-      state = 'open';
+    if(rms > threshold) {
+      gateOpen = true;
+      holdCount = holdSamples;
+    } else if(holdCount > 0) {
+      holdCount -= windowSamples;
+      gateOpen = true;
     } else {
-      state = 'closed';
+      gateOpen = false;
     }
 
-    const targetGain = state === 'open' ? 1 : 0.02;
-    for (let j = i; j < end; j++) {
-      // Smooth gain transition
-      if (targetGain > gateGain) gateGain = Math.min(targetGain, gateGain + 1 / attackSamples);
-      else gateGain = Math.max(targetGain, gateGain - 1 / releaseSamples);
+    const targetGain = gateOpen ? 1.0 : 0.01; // attenuate to 1% when gated
+    const step = gateOpen ?
+      (targetGain - gateGain) / Math.max(1, attackSamples / windowSamples) :
+      (gateGain - targetGain) / Math.max(1, releaseSamples / windowSamples);
+
+    for(let j = i; j < end; j++) {
+      if(gateOpen && gateGain < targetGain) gateGain = Math.min(targetGain, gateGain + step);
+      if(!gateOpen && gateGain > targetGain) gateGain = Math.max(targetGain, gateGain - step);
       out[j] = data[j] * gateGain;
     }
   }
 
-  const outBuf = new AudioBuffer({ numberOfChannels: 1, length: buffer.length, sampleRate: buffer.sampleRate });
-  outBuf.getChannelData(0).set(out);
-  return outBuf;
+  const result = new AudioBuffer({ numberOfChannels:1, length:buf.length, sampleRate:buf.sampleRate });
+  result.getChannelData(0).set(out);
+  return result;
 }
 
-function toMono(buffer) {
-  if (buffer.numberOfChannels === 1) return buffer;
-  const out = new AudioBuffer({ numberOfChannels: 1, length: buffer.length, sampleRate: buffer.sampleRate });
-  const outData = out.getChannelData(0);
-  for (let ch = 0; ch < buffer.numberOfChannels; ch++) {
-    const d = buffer.getChannelData(ch);
-    for (let i = 0; i < d.length; i++) outData[i] += d[i];
-  }
-  for (let i = 0; i < outData.length; i++) outData[i] /= buffer.numberOfChannels;
-  return out;
-}
-
-function normalize(buffer, targetPeak = 0.90) {
-  const data = buffer.getChannelData(0);
+/* ── NORMALISE ── */
+function normalise(buf, target = 0.88) {
+  const data = buf.getChannelData(0);
   let max = 0;
-  for (let i = 0; i < data.length; i++) { const a = Math.abs(data[i]); if (a > max) max = a; }
-  if (max === 0) return buffer;
-  const g = targetPeak / max;
-  const out = new AudioBuffer({ numberOfChannels: 1, length: buffer.length, sampleRate: buffer.sampleRate });
-  const outData = out.getChannelData(0);
-  for (let i = 0; i < data.length; i++) outData[i] = data[i] * g;
-  return out;
+  for(let i = 0; i < data.length; i++) { const a = Math.abs(data[i]); if(a > max) max = a; }
+  if(max < 0.001) return buf;
+  const g = target / max;
+  const result = new AudioBuffer({ numberOfChannels:1, length:buf.length, sampleRate:buf.sampleRate });
+  const out = result.getChannelData(0);
+  for(let i = 0; i < data.length; i++) out[i] = Math.max(-1, Math.min(1, data[i] * g));
+  return result;
 }
 
-function encodeToWav(buffer) {
-  const data = buffer.getChannelData(0);
-  const sr = buffer.sampleRate;
-  const numSamples = data.length;
-  const dataSize = numSamples * 2;
-  const ab = new ArrayBuffer(44 + dataSize);
-  const view = new DataView(ab);
-  const ws = (o, s) => { for (let i = 0; i < s.length; i++) view.setUint8(o + i, s.charCodeAt(i)); };
-  ws(0, 'RIFF'); view.setUint32(4, 36 + dataSize, true); ws(8, 'WAVE');
-  ws(12, 'fmt '); view.setUint32(16, 16, true); view.setUint16(20, 1, true);
-  view.setUint16(22, 1, true); view.setUint32(24, sr, true); view.setUint32(28, sr * 2, true);
-  view.setUint16(32, 2, true); view.setUint16(34, 16, true); ws(36, 'data'); view.setUint32(40, dataSize, true);
-  let offset = 44;
-  for (let i = 0; i < numSamples; i++) {
+/* ── WAV ENCODER ── */
+function encodeWav(buf) {
+  const data = buf.getChannelData(0);
+  const sr = buf.sampleRate;
+  const n = data.length;
+  const ab = new ArrayBuffer(44 + n * 2);
+  const v = new DataView(ab);
+  const ws = (o, s) => { for(let i = 0; i < s.length; i++) v.setUint8(o+i, s.charCodeAt(i)); };
+  ws(0,'RIFF'); v.setUint32(4, 36+n*2, true); ws(8,'WAVE');
+  ws(12,'fmt '); v.setUint32(16,16,true); v.setUint16(20,1,true);
+  v.setUint16(22,1,true); v.setUint32(24,sr,true); v.setUint32(28,sr*2,true);
+  v.setUint16(32,2,true); v.setUint16(34,16,true);
+  ws(36,'data'); v.setUint32(40,n*2,true);
+  let off = 44;
+  for(let i = 0; i < n; i++) {
     const s = Math.max(-1, Math.min(1, data[i]));
-    view.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
-    offset += 2;
+    v.setInt16(off, s < 0 ? s*0x8000 : s*0x7FFF, true);
+    off += 2;
   }
-  return new Blob([ab], { type: 'audio/wav' });
+  return new Blob([ab], {type:'audio/wav'});
 }
 
+/* ── CLOUDINARY UPLOAD ── */
 export async function uploadToCloudinary(blob, episodeDay, onProgress) {
-  const CLOUD_NAME = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
-  const UPLOAD_PRESET = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
-  if (!CLOUD_NAME || !UPLOAD_PRESET || CLOUD_NAME === 'skip') {
-    throw new Error('Cloudinary not configured. Add REACT_APP_CLOUDINARY_CLOUD_NAME and REACT_APP_CLOUDINARY_UPLOAD_PRESET to .env');
-  }
-  const formData = new FormData();
-  formData.append('file', blob, `episode-day-${episodeDay}.wav`);
-  formData.append('upload_preset', UPLOAD_PRESET);
-  formData.append('folder', 'nurquran/episodes');
-  formData.append('resource_type', 'video');
+  const CLOUD = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
+  const PRESET = process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET;
+  if(!CLOUD || CLOUD==='skip') throw new Error('Cloudinary not configured. Add REACT_APP_CLOUDINARY_CLOUD_NAME to .env');
+  const fd = new FormData();
+  fd.append('file', blob, `episode-day-${episodeDay}.wav`);
+  fd.append('upload_preset', PRESET);
+  fd.append('folder', 'nurquran/episodes');
+  fd.append('resource_type', 'video');
   onProgress?.('Uploading to secure storage...');
   return new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/video/upload`);
-    xhr.upload.onprogress = e => { if (e.lengthComputable) onProgress?.(`Uploading... ${Math.round(e.loaded/e.total*100)}%`); };
-    xhr.onload = () => { if (xhr.status === 200) resolve(JSON.parse(xhr.responseText).secure_url); else reject(new Error('Upload failed: ' + xhr.statusText)); };
-    xhr.onerror = () => reject(new Error('Network error during upload'));
-    xhr.send(formData);
+    xhr.open('POST', `https://api.cloudinary.com/v1_1/${CLOUD}/video/upload`);
+    xhr.upload.onprogress = e => { if(e.lengthComputable) onProgress?.(`Uploading... ${Math.round(e.loaded/e.total*100)}%`); };
+    xhr.onload = () => { if(xhr.status===200) resolve(JSON.parse(xhr.responseText).secure_url); else reject(new Error('Upload failed: '+xhr.statusText)); };
+    xhr.onerror = () => reject(new Error('Network error'));
+    xhr.send(fd);
   });
 }
 
+/* ── LEVEL METER ── */
 export function createLevelMeter(stream, onLevel) {
   const ctx = new (window.AudioContext || window.webkitAudioContext)();
-  const source = ctx.createMediaStreamSource(stream);
+  const src = ctx.createMediaStreamSource(stream);
   const analyser = ctx.createAnalyser();
   analyser.fftSize = 256;
-  source.connect(analyser);
+  src.connect(analyser);
   const data = new Uint8Array(analyser.frequencyBinCount);
   let rafId;
-  const tick = () => { analyser.getByteFrequencyData(data); onLevel(data.reduce((s,v)=>s+v,0)/data.length/255); rafId = requestAnimationFrame(tick); };
+  const tick = () => { analyser.getByteFrequencyData(data); onLevel(data.reduce((s,v)=>s+v,0)/data.length/255); rafId=requestAnimationFrame(tick); };
   tick();
-  return { stop: () => { cancelAnimationFrame(rafId); source.disconnect(); if (ctx.state !== 'closed') ctx.close(); } };
+  return { stop: () => { cancelAnimationFrame(rafId); src.disconnect(); if(ctx.state!=='closed') ctx.close(); } };
 }
