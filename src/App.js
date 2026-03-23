@@ -262,9 +262,9 @@ function SetupScreen({onDone}){
     {icon:'🌍',ar:'لِلنَّاس',title:'Free for every human',desc:'No ads. No subscriptions. No data sold. Built as sadaqah jariyah.'},
   ];
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(()=>{
-    const t=setInterval(()=>setSlide(s=>(s+1)%features.length),3500);
+    const len=6;
+    const t=setInterval(()=>setSlide(s=>(s+1)%len),3500);
     return()=>clearInterval(t);
   },[]);
 
